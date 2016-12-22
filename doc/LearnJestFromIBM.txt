@@ -1,0 +1,78 @@
+
+//Learn it
+//http://www.ibm.com/developerworks/java/library/j-javadev2-24/index.html?ca=drs-
+	
+		//Creating a connection to an ElasticSearch instance with Jest
+		ClientConfig clientConfig = new ClientConfig();
+		Set<String> servers = new LinkedHashSet<String>();
+		servers.add("http://localhost:9200");
+		clientConfig.getServerProperties().put(ClientConstants.SERVER_LIST, servers);
+		
+		//Creating a client object
+		JestClientFactory factory = new JestClientFactory();
+		factory.setClientConfig(clientConfig);
+		JestClient client = factory.getObject();
+		
+		//Capture and index music reviews in a local ElasticSearch instance
+		URL url =  new URL("http://api.usatoday.com/open/reviews/music/recent?count=300&api_key=_key_");
+		String jsonTxt = IOUtils.toString(url.openConnection().getInputStream());
+		JSONObject json = (JSONObject) JSONSerializer.toJSON(jsonTxt);
+		JSONArray reviews = (JSONArray) json.getJSONArray("MusicReviews");
+		for (Object jsonReview : reviews) {
+		  MusicReview review = MusicReview.fromJSON((JSONObject) jsonReview);
+		  client.execute(new Index.Builder(review).index("music_reviews").type("review").build());
+		}
+		
+		
+		//Searching with Jest
+//		curl -XGET 'http://localhost:9200/music_reviews/_search?pretty=true' -d
+//		 ' {"explain": true, "query" : { "term" : { "brief" : "jazz" } }}'
+		
+		QueryBuilder queryBuilder = QueryBuilders.termQuery("brief", "jazz");
+		Search search = new Search(queryBuilder);
+		search.addIndex("music_reviews");
+		search.addType("review");
+		JestResult result = client.execute(search);
+
+		List<MusicReview> reviewList = result.getSourceAsObjectList(MusicReview.class);
+		for(MusicReview review: reviewList){
+		  System.out.println("search result is " + review);
+		}
+		
+		
+				
+				
+	}
+	
+	
+	//Searching with ranges and filters using Jest
+//	curl -XGET 'http://192.168.1.11:9200/music_reviews/_search?pretty=true' -d
+//	  '{"query": { "filtered" : { "filter" : {  "range" : { "rating" : 
+//	     {"from": 3.5, "to":4.0} } },
+//	     "query" : { "term" : { "brief" : "jazz" } } } }}'
+	import static org.elasticsearch.index.query.FilterBuilders.rangeFilter;
+	import static org.elasticsearch.index.query.QueryBuilders.filteredQuery;
+	import static org.elasticsearch.index.query.QueryBuilders.termQuery;
+
+	//later in the code
+
+	QueryBuilder queryBuilder = filteredQuery(termQuery("brief", "jazz"), 
+	  rangeFilter("rating").from(3.5).to(4.0));
+
+	Search search = new Search(queryBuilder);
+	search.addIndex("music_reviews");
+	search.addType("review");
+	JestResult result = client.execute(search);
+
+	List<MusicReview> reviewList = result.getSourceAsObjectList(MusicReview.class);
+	for(MusicReview review: reviewList){
+	  System.out.println("search result is " + review);
+	}
+	
+	//Searching with wild cards
+	import static org.elasticsearch.index.query.QueryBuilders.wildcardQuery;
+	//later in the code
+	QueryBuilder queryBuilder = filteredQuery(wildcardQuery("brief", "buddy*"), 
+	  rangeFilter("rating").from(3.5).to(4.0));
+	//see listing 12 for the template search and response
+	

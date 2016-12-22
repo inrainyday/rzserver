@@ -1,0 +1,970 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preAlarmRules>
+
+	<preAlarmRule name="[事件告警]设备有单板被异常拔出" domain="CMNET/IP承载网/城域网" neType="路由器/交换机" vendor="华为" logType="其它日志" >
+			<keys>is pulled out abnormally</keys>
+			<alarmTitle>[事件告警]设备有单板被异常拔出</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]设备有单板被异常拔出" domain="PS域数通" neType="路由器/交换机/防火墙" vendor="华为" logType="其它日志" >
+			<keys>is pulled out abnormally</keys>
+			<alarmTitle>[事件告警]设备有单板被异常拔出</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+		
+	<preAlarmRule name="[事件告警]设备有单板被异常拔出" domain="CS_CE/PS_CE" neType="路由器" vendor="华为" logType="其它日志" >
+			<keys>is pulled out abnormally</keys>
+			<alarmTitle>[事件告警]设备有单板被异常拔出</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]设备主控板做切换" domain="CMNET/IP承载网/城域网" neType="路由器/交换机" vendor="华为" logType="其它日志" >
+			<keys>changed to slave MPU</keys>
+			<alarmTitle>[事件告警]设备主控板做切换</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]设备主控板做切换" domain="PS域数通" neType="路由器/交换机/防火墙" vendor="华为" logType="其它日志" >
+			<keys>changed to slave MPU</keys>
+			<alarmTitle>[事件告警]设备主控板做切换</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]设备主控板做切换" domain="CS_CE/PS_CE" neType="路由器" vendor="华为" logType="其它日志" >
+			<keys>changed to slave MPU</keys>
+			<alarmTitle>[事件告警]设备主控板做切换</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]有可疑用户登录" domain="CMNET/IP承载网/城域网" neType="路由器/交换机" vendor="华为" logType="操作日志" >
+			<keys>Failed to login</keys>
+			<alarmTitle>[事件告警]有可疑用户登录</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]有可疑用户登录" domain="PS域数通" neType="路由器/交换机/防火墙" vendor="华为" logType="操作日志" >
+			<keys>Failed to login</keys>
+			<alarmTitle>[事件告警]有可疑用户登录</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]有可疑用户登录" domain="CS_CE/PS_CE" neType="路由器" vendor="华为" logType="操作日志" >
+			<keys>Failed to login</keys>
+			<alarmTitle>[事件告警]有可疑用户登录</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]有调整用户权限" domain="CMNET/IP承载网/城域网" neType="路由器/交换机" vendor="华为" logType="操作日志" >
+			<keys>Command="[level]"</keys>
+			<alarmTitle>[事件告警]有调整用户权限</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]有调整用户权限" domain="PS域数通" neType="路由器/交换机/防火墙" vendor="华为" logType="操作日志" >
+			<keys>Command="[level]"</keys>
+			<alarmTitle>[事件告警]有调整用户权限</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]有调整用户权限" domain="CS_CE/PS_CE" neType="路由器" vendor="华为" logType="操作日志" >
+			<keys>Command="[level]"</keys>
+			<alarmTitle>[事件告警]有调整用户权限</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]被手工重启" domain="CMNET/IP承载网/城域网" neType="路由器/交换机" vendor="华为" logType="操作日志" >
+			<keys> Command="[reboot]"</keys>
+			<alarmTitle>[事件告警]被手工重启</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]被手工重启" domain="PS域数通" neType="路由器/交换机/防火墙" vendor="华为" logType="操作日志" >
+			<keys> Command="[reboot]"</keys>
+			<alarmTitle>[事件告警]被手工重启</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]被手工重启" domain="CS_CE/PS_CE" neType="路由器" vendor="华为" logType="操作日志" >
+			<keys> Command="[reboot]"</keys>
+			<alarmTitle>[事件告警]被手工重启</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]有进行协议的重置" domain="CMNET/IP承载网/城域网" neType="路由器/交换机" vendor="华为" logType="操作日志" >
+			<keys>Command="[reset]"</keys>
+			<alarmTitle>[事件告警]有进行协议的重置</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]有进行协议的重置" domain="PS域数通" neType="路由器/交换机/防火墙" vendor="华为" logType="操作日志" >
+			<keys>Command="[reset]"</keys>
+			<alarmTitle>[事件告警]有进行协议的重置</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]有进行协议的重置" domain="CS_CE/PS_CE" neType="路由器" vendor="华为" logType="操作日志" >
+			<keys>Command="[reset]"</keys>
+			<alarmTitle>[事件告警]有进行协议的重置</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]被手工重启" domain="CMNET/IP承载网/城域网" neType="路由器/交换机" vendor="华为" logType="操作日志" >
+			<keys>Command power off</keys>
+			<alarmTitle>[事件告警]被手工重启</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]被手工重启" domain="PS域数通" neType="路由器/交换机/防火墙" vendor="华为" logType="操作日志" >
+			<keys>Command="[power off]"</keys>
+			<alarmTitle>[事件告警]被手工重启</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]被手工重启" domain="CS_CE/PS_CE" neType="路由器" vendor="华为" logType="操作日志" >
+			<keys>Command="[power off]"</keys>
+			<alarmTitle>[事件告警]被手工重启</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]设备被手工重启" domain="IP承载网" neType="交换机" vendor="中兴" logType="其它日志" >
+			<keys>undergoing a cold start</keys>
+			<alarmTitle>[事件告警]设备被手工重启</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]设备CPU负荷过高" domain="IP承载网" neType="交换机" vendor="中兴" logType="其它日志" >
+			<keys>CPU load exceeds the lowest threshold NP(M) panel</keys>
+			<alarmTitle>[事件告警]设备CPU负荷过高</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]设备上点播用户数超限" domain="IP承载网" neType="交换机" vendor="中兴" logType="其它日志" >
+			<keys>IGMP SNOOPING current host num is 32000 reaches the max host memory threshold 100%!</keys>
+			<alarmTitle>[事件告警]设备上点播用户数超限</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]板卡离线、上线" domain="CMNET" neType="路由器" vendor="Juniper" logType="其它日志" >
+			<keys>Power on</keys>
+			<alarmTitle>[事件告警]板卡离线、上线</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+
+	<preAlarmRule name="[事件告警]板卡离线、上线" domain="CMNET" neType="路由器" vendor="Juniper" logType="其它日志" >
+			<keys>Power off</keys>
+			<alarmTitle>[事件告警]板卡离线、上线</alarmTitle>
+			<alarmLevel>5</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>	
+	
+	<preAlarmRule name="[事件告警]内存ECC错误预警" domain="CMNET" neType="路由器" vendor="Juniper" logType="其它日志" >
+			<keys>smchip_isr_base@@UnCorrectable ECC</keys>
+			<alarmTitle>[事件告警]内存ECC错误预警</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]板卡闭合操作预警" domain="CMNET" neType="路由器" vendor="Juniper" logType="其它日志" >
+			<keys>request chassis</keys>
+			<alarmTitle>[事件告警]板卡闭合操作预警</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生CRASH文件预警" domain="PS_CE/CS_CE" neType="路由器" vendor="爱立信" logType="其它日志" >
+			<keys>crash detected</keys>
+			<alarmTitle>[事件预警]同一网元产生CRASH文件预警</alarmTitle>
+			<alarmLevel>6</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生配置操作预警" domain="PS_CE/CS_CE" neType="路由器" vendor="爱立信" logType="其它日志" >
+			<keys>Config@@port@@shut</keys>
+			<alarmTitle>[事件预警]同一网元产生配置操作预警</alarmTitle>
+			<alarmLevel></alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生板卡拔插或者重启预警" domain="PS_CE/CS_CE" neType="路由器" vendor="爱立信" logType="其它日志" >
+			<keys>REMOVED/INSERTED</keys>
+			<alarmTitle>[事件预警]同一网元产生板卡拔插或者重启预警</alarmTitle>
+			<alarmLevel>6</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生SCTP链路down事件" domain="PS域" neType="MME" vendor="爱立信" logType="fm_alarm" >
+			<keys>sctpIPPathFailure</keys>
+			<alarmTitle>[事件预警]同一网元产生SCTP链路down事件</alarmTitle>
+			<alarmLevel>warning</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生CPU负荷事件" domain="PS域" neType="MME" vendor="爱立信" logType="fm_alarm" >
+			<keys>CpuUsage has reached its threshold</keys>
+			<alarmTitle>[事件预警]同一网元产生CPU负荷事件</alarmTitle>
+			<alarmLevel>warning</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生内存负荷事件" domain="PS域" neType="MME" vendor="爱立信" logType="fm_alarm" >
+			<keys>MemUsage has reached its threshold</keys>
+			<alarmTitle>[事件预警]同一网元产生内存负荷事件</alarmTitle>
+			<alarmLevel>warning</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生重启事件-small" domain="PS域" neType="MME" vendor="爱立信" logType="isp.log" >
+			<keys>UTC@@small_restart@@manual</keys>
+			<alarmTitle>[事件预警]同一网元产生重启事件-small</alarmTitle>
+			<alarmLevel>small_restart</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生重启事件-large" domain="PS域" neType="MME" vendor="爱立信" logType="isp.log" >
+			<keys>UTC@@large_restart@@manual</keys>
+			<alarmTitle>[事件预警]同一网元产生重启事件-large</alarmTitle>
+			<alarmLevel>large_restart</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生重启事件-node" domain="PS域" neType="MME" vendor="爱立信" logType="isp.log" >
+			<keys>UTC@@node_restart@@manual</keys>
+			<alarmTitle>[事件预警]同一网元产生重启事件-node</alarmTitle>
+			<alarmLevel>node_restart</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生重启事件-ncb_failover" domain="PS域" neType="MME" vendor="爱立信" logType="isp.log" >
+			<keys>ncb_failover</keys>
+			<alarmTitle>[事件预警]同一网元产生重启事件-ncb_failover</alarmTitle>
+			<alarmLevel>ncb_failover</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生通信链路链接超时事件" domain="PS域" neType="MME" vendor="爱立信" logType="mobility_event_log" >
+			<keys>Timeout when communicating with external node</keys>
+			<alarmTitle>[事件预警]同一网元产生通信链路链接超时事件</alarmTitle>
+			<alarmLevel></alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生用户激活失败事件" domain="PS域" neType="MME" vendor="爱立信" logType="session_event_log" >
+			<keys>APN Resolving error</keys>
+			<alarmTitle>[事件预警]同一网元产生用户激活失败事件</alarmTitle>
+			<alarmLevel></alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生用户异常登录事件" domain="PS域" neType="MME" vendor="爱立信" logType="security log" >
+			<keys>rhost</keys>
+			<alarmTitle>[事件预警]同一网元产生用户异常登录事件</alarmTitle>
+			<alarmLevel></alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生CPU负荷事件" domain="PS域" neType="SAEGW" vendor="爱立信" logType="alarm-history" >
+			<keys>CpuUsageThresholdReached</keys>
+			<alarmTitle>[事件预警]同一网元产生CPU负荷事件</alarmTitle>
+			<alarmLevel></alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生内存负荷事件" domain="PS域" neType="SAEGW" vendor="爱立信" logType="alarm-history" >
+			<keys>MemoryUsageThresholdReached</keys>
+			<alarmTitle>[事件预警]同一网元产生内存负荷事件</alarmTitle>
+			<alarmLevel></alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生链路承载质量差事件" domain="PS域" neType="SAEGW" vendor="爱立信" logType="alarm-history" >
+			<keys>BearersThresholdReachedOnAPN</keys>
+			<alarmTitle>[事件预警]同一网元产生链路承载质量差事件</alarmTitle>
+			<alarmLevel></alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生节点承载质量差事件" domain="PS域" neType="SAEGW" vendor="爱立信" logType="alarm-history" >
+			<keys>BearersThresholdReachedOnNode</keys>
+			<alarmTitle>[事件预警]同一网元产生节点承载质量差事件</alarmTitle>
+			<alarmLevel></alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生RPSW switch over事件" domain="PS域" neType="SAEGW" vendor="爱立信" logType="loggd_persistent.log" >
+			<keys>controller switch over</keys>
+			<alarmTitle>[事件预警]同一网元产生RPSW switch over事件</alarmTitle>
+			<alarmLevel></alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生进程crash事件" domain="PS域" neType="SAEGW" vendor="爱立信" logType="alarm-history" >
+			<keys>dying</keys>
+			<alarmTitle>[事件预警]同一网元产生进程crash事件</alarmTitle>
+			<alarmLevel></alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生板卡crash事件" domain="PS域" neType="SAEGW" vendor="爱立信" logType="isp.log" >
+			<keys>irrecoverable SW fault</keys>
+			<alarmTitle>[事件预警]同一网元产生板卡crash事件</alarmTitle>
+			<alarmLevel>NOTICE</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生重启事件-node" domain="PS域" neType="SAEGW" vendor="爱立信" logType="alarm-history" >
+			<keys>UTC@@Node_down@@System@@Manual</keys>
+			<alarmTitle>[事件预警]同一网元产生重启事件-node</alarmTitle>
+			<alarmLevel>Node_down</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生网络操作事件" domain="PS域" neType="SAEGW" vendor="爱立信" logType="persistent log" >
+			<keys>loginterface=cli</keys>
+			<alarmTitle>[事件预警]同一网元产生网络操作事件</alarmTitle>
+			<alarmLevel></alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生发送端IP主机合法性预警" domain="CMNET" neType="路由器/交换机" vendor="H3C" logType="其它日志" >
+			<keys>ARP_SENDER_IP_INVALID</keys>
+			<alarmTitle>[事件预警]同一网元产生网络操作事件</alarmTitle>
+			<alarmLevel>6</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生发送端IP主机合法性-速率预警" domain="CMNET" neType="路由器/交换机" vendor="H3C" logType="其它日志" >
+			<keys>ARP RATE EXCEEDED</keys>
+			<alarmTitle>[事件预警]同一网元产生发送端IP主机合法性-速率预警</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生链路down预警" domain="CMNET" neType="路由器/交换机" vendor="H3C" logType="其它日志" >
+			<keys>ETHOAM_OAM_LINK_DOWN</keys>
+			<alarmTitle>[事件预警]同一网元产生链路down预警</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生设备重启事件预警" domain="CMNET" neType="路由器/交换机" vendor="H3C" logType="其它日志" >
+			<keys>Reboot device by command</keys>
+			<alarmTitle>[事件预警]同一网元产生设备重启事件预警</alarmTitle>
+			<alarmLevel>1</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生发送端IP主机合法性预警" domain="PS域数通" neType="路由器/交换机" vendor="H3C" logType="操作日志" >
+			<keys>ARP_SENDER_IP_INVALID</keys>
+			<alarmTitle>[事件预警]同一网元产生发送端IP主机合法性预警</alarmTitle>
+			<alarmLevel>6</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生发送端IP主机合法性-速率预警" domain="PS域数通" neType="路由器/交换机" vendor="H3C" logType="操作日志" >
+			<keys>ARP_RATE_EXCEEDED</keys>
+			<alarmTitle>[事件预警]同一网元产生发送端IP主机合法性-速率预警</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生链路down预警" domain="PS域数通" neType="路由器/交换机" vendor="H3C" logType="系统日志" >
+			<keys>ETHOAM_OAM_LINK_DOWN</keys>
+			<alarmTitle>[事件预警]同一网元产生链路down预警</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生设备重启事件预警" domain="PS域数通" neType="路由器/交换机" vendor="H3C" logType="系统日志" >
+			<keys>Reboot device by command</keys>
+			<alarmTitle>[事件预警]同一网元产生设备重启事件预警</alarmTitle>
+			<alarmLevel>1</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生软件升级预警" domain="PS域数通" neType="防火墙" vendor="H3C" logType="操作日志" >
+			<keys>WEBOPT_UPDATESW</keys>
+			<alarmTitle>[事件预警]同一网元产生软件升级预警</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件预警]同一网元产生用户权限变更预警" domain="PS域数通" neType="防火墙" vendor="H3C" logType="系统日志" >
+			<keys>LS_USER_ROLE_CHANGE</keys>
+			<alarmTitle>[事件预警]同一网元产生用户权限变更预警</alarmTitle>
+			<alarmLevel>4</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]同一网元产生重启事件-node" domain="CMNET/PS_CE/CS_CE/城域网" neType="交换机" vendor="思科" logType="其它日志" >
+			<keys>USER_RESET</keys>
+			<alarmTitle>[事件告警]同一网元产生重启事件-node</alarmTitle>
+			<alarmLevel>6</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="[事件告警]同一网元产生提交配置操作预警" domain="CMNET/PS_CE/CS_CE/城域网" neType="交换机" vendor="思科" logType="其它日志" >
+			<keys>MGBL-CONFIG-6-DB_COMMIT@@Configuration committed by user</keys>
+			<alarmTitle>[事件告警]同一网元产生提交配置操作预警</alarmTitle>
+			<alarmLevel>6</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="逻辑CPU上电成功通知信息" domain="PS域" neType="MME" vendor="中兴" logType="系统日志（通知）" >
+			<keys>4418</keys>
+			<alarmTitle>逻辑CPU上电成功通知信息</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="逻辑CPU上电失败通知信息" domain="PS域" neType="MME" vendor="中兴" logType="系统日志（通知）" >
+			<keys>4419</keys>
+			<alarmTitle>逻辑CPU上电失败通知信息</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="数据库存盘失败" domain="PS域" neType="MME" vendor="中兴" logType="系统日志（通知）" >
+			<keys>8007</keys>
+			<alarmTitle>数据库存盘失败</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="内存不足" domain="PS域" neType="MME" vendor="中兴" logType="系统日志（通知）" >
+			<keys>10048</keys>
+			<alarmTitle>内存不足</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="GSU启动" domain="PS域" neType="SAEGW" vendor="中兴" logType="系统日志（通知）" >
+			<keys>110002</keys>
+			<alarmTitle>GSU启动</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="进程初始化失败" domain="PS域" neType="SAEGW" vendor="中兴" logType="系统日志（通知）" >
+			<keys>105001</keys>
+			<alarmTitle>进程初始化失败</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="cpu上线" domain="PS域" neType="SAEGW" vendor="中兴" logType="系统日志（通知）" >
+			<keys>400119</keys>
+			<alarmTitle>cpu上线</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="空闲内存不足" domain="PS域" neType="SAEGW" vendor="中兴" logType="系统日志（通知）" >
+			<keys>110011</keys>
+			<alarmTitle>空闲内存不足</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="重启所有偶联" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>RESTART SCTP</keys>
+			<alarmTitle>重启所有偶联</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="停止所有偶联" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>STOP SCTP</keys>
+			<alarmTitle>停止所有偶联</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="停止所有链路" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>STOP ALLLNK</keys>
+			<alarmTitle>停止所有链路</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="重启所有链路" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>RESET ALLLNK</keys>
+			<alarmTitle>重启所有链路</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="复位RNC" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>RESET RNC</keys>
+			<alarmTitle>复位RNC</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="复位ENODEB" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>RESET ENODEB</keys>
+			<alarmTitle>复位ENODEB</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="复位BVC" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>RESET BVC</keys>
+			<alarmTitle>复位BVC</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="SGSN负荷卸载请求" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>EXEC UNLOAD</keys>
+			<alarmTitle>SGSN负荷卸载请求</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="MME负荷重平衡请求" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>EXEC REBALANCE</keys>
+			<alarmTitle>MME负荷重平衡请求</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="清空dns cache所有内容" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>CLEAR DNSCACHE</keys>
+			<alarmTitle>清空dns cache所有内容</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="导出用户信息" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>EXPORT USERINFO</keys>
+			<alarmTitle>导出用户信息</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="恢复数据" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>RESTORE DATA</keys>
+			<alarmTitle>恢复数据</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="传送数据（Admin专用命令）" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SYNA</keys>
+			<alarmTitle>传送数据（Admin专用命令）</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="修改本局信令点" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SET OPC</keys>
+			<alarmTitle>修改本局信令点</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="设置combo本局移动数据" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SET COMBOCFG</keys>
+			<alarmTitle>设置combo本局移动数据</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="正常倒换" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SWP NORMAL</keys>
+			<alarmTitle>正常倒换</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="强制倒换" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SWP FORCE</keys>
+			<alarmTitle>强制倒换</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="正常复位" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>RESET NORMAL</keys>
+			<alarmTitle>正常复位</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="强制复位" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>RESET FORCE</keys>
+			<alarmTitle>强制复位</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="设置容量规划" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SET CAPACITY</keys>
+			<alarmTitle>设置容量规划</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="设置分组域参数" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SET PACKET DOMAIN PARAMETER</keys>
+			<alarmTitle>设置分组域参数</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="设置gtp参数" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SET GTP PARAMETER</keys>
+			<alarmTitle>设置gtp参数</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="设置UMTS AS完整性保护参数" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SET INTEGCTRL</keys>
+			<alarmTitle>设置UMTS AS完整性保护参数</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="设置EPC NAS完整性保护参数" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SET NAS INTEGCTRL</keys>
+			<alarmTitle>设置EPC NAS完整性保护参数</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="设置移动管理参数" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SET MOBILE MANAGEMENT</keys>
+			<alarmTitle>设置移动管理参数</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="修改信令变量" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SET SIGVAR</keys>
+			<alarmTitle>修改信令变量</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="设置mme过负荷参数" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SET MME OVERLOAD PARA</keys>
+			<alarmTitle>设置mme过负荷参数</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="设置mme通用业务控制" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SET MME SERVICE CONTROL</keys>
+			<alarmTitle>设置mme通用业务控制</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="设置过负荷基本参数" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SET OVERLOAD BASIC PARA</keys>
+			<alarmTitle>设置过负荷基本参数</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="设置软件参数配置" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SET SOFTWARE PARAMETER</keys>
+			<alarmTitle>设置软件参数配置</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="删除ims APN配置" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>DEL IMS APN</keys>
+			<alarmTitle>删除ims APN配置</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="通用增加数据配置" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>ADD</keys>
+			<alarmTitle>通用增加数据配置</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="通用删除数据配置" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>DEL</keys>
+			<alarmTitle>通用删除数据配置</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="通过修改数据配置" domain="PS域" neType="MME" vendor="中兴" logType="操作日志" >
+			<keys>SET</keys>
+			<alarmTitle>通过修改数据配置</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="回退配置数据" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>rollback-configuration</keys>
+			<alarmTitle>回退配置数据</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="设备整局重启" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>reload</keys>
+			<alarmTitle>设备整局重启</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="下电/上电某槽位板卡" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>power</keys>
+			<alarmTitle>下电/上电某槽位板卡</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改接口IP地址" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>ip address</keys>
+			<alarmTitle>增加/修改接口IP地址</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改路由表" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>ip route</keys>
+			<alarmTitle>增加/修改路由表</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改路由表" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>router ospf</keys>
+			<alarmTitle>增加/修改路由表</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改ospf路由表" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>network</keys>
+			<alarmTitle>增加/修改ospf路由表</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="修改ca功能" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>flow-hash</keys>
+			<alarmTitle>修改ca功能</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="批量卸载用户" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>deactive-pdp</keys>
+			<alarmTitle>批量卸载用户</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改S11业务地址" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>s11-gtp-ip-address</keys>
+			<alarmTitle>增加/修改S11业务地址</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改S5信令面业务地址" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>s5s8-gtpc-ip-address</keys>
+			<alarmTitle>增加/修改S5信令面业务地址</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改S5用户面业务地址" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>s5s8-gtpu-ip-address</keys>
+			<alarmTitle>增加/修改S5用户面业务地址</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改SAEGW CG配置" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>cg-profile</keys>
+			<alarmTitle>增加/修改SAEGW CG配置</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改地址池地址段" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>segment</keys>
+			<alarmTitle>增加/修改地址池地址段</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改地址池或apn的vrf" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>vrf</keys>
+			<alarmTitle>增加/修改地址池或apn的vrf</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改计费规则" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>charge-rule</keys>
+			<alarmTitle>增加/修改计费规则</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改控制规则" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>control-rule</keys>
+			<alarmTitle>增加/修改控制规则</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改计费控制规则" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>charge-control</keys>
+			<alarmTitle>增加/修改计费控制规则</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="修改apn允许接入" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>access</keys>
+			<alarmTitle>修改apn允许接入</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="修改apn别名" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>alias</keys>
+			<alarmTitle>修改apn别名</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="修改apn计费模式（在线计费、内容计费）" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>charge charging-mode</keys>
+			<alarmTitle>修改apn计费模式（在线计费、内容计费）</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="修改tcp加速" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>tcp-optimize-control</keys>
+			<alarmTitle>修改tcp加速</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="修改apn空闲时长（2、3G接入）" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>idle-time</keys>
+			<alarmTitle>修改apn空闲时长（2、3G接入）</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="修改apn空闲时长（4G接入）" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>idle-time-lte</keys>
+			<alarmTitle>修改apn空闲时长（4G接入）</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改地址池配置" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>ippool</keys>
+			<alarmTitle>增加/修改地址池配置</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="修改apn使用的ocs" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>charge online ocs-server</keys>
+			<alarmTitle>修改apn使用的ocs</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="修改apn Gx口接入" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>pcc-access</keys>
+			<alarmTitle>修改apn Gx口接入</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="修改apn Gx口使用的pcrf" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>pcc pcrf</keys>
+			<alarmTitle>修改apn Gx口使用的pcrf</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改SBC模板" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>pcscf-profile</keys>
+			<alarmTitle>增加/修改SBC模板</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改SBC地址" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>pcscf-address</keys>
+			<alarmTitle>增加/修改SBC地址</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="修改apn地址分配模式" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>ip-allocate-mode</keys>
+			<alarmTitle>修改apn地址分配模式</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改三层地址重写配置" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>rewrite</keys>
+			<alarmTitle>增加/修改三层地址重写配置</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="增加/修改qci-dscp映射配置" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>qci-dscp-map</keys>
+			<alarmTitle>增加/修改qci-dscp映射配置</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+	<preAlarmRule name="修改默认dscp配置" domain="PS域" neType="SAEGW" vendor="中兴" logType="操作日志" >
+			<keys>default-dscp</keys>
+			<alarmTitle>修改默认dscp配置</alarmTitle>
+			<alarmLevel>无</alarmLevel>
+			<alarmText>${body}</alarmText>
+	</preAlarmRule>
+	
+</preAlarmRules>

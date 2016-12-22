@@ -1,0 +1,2642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queryItems>
+	<queryItem domain="多维度查询" name="">
+{"query": {
+    "filtered": {
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+"size":0,
+"aggs": {
+    "recent_12h": {
+    "filter": {
+    "range": {
+    "eventTime": {
+    "from": "now-30d",
+    "to": "now+8h"
+    }
+    }
+    },
+    "aggs": {
+    "cities": {
+    "terms": {
+        "field": "维度1"
+    },
+    "aggs":{
+        "vendors":{
+        "terms":{
+        "field":"维度2"
+    },
+"aggs":{
+    "distinct_neName":{
+    "cardinality":{
+    "field":"统计类型"
+}
+}
+}
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+	</queryItem>
+	<queryItem domain="11小时数据" name="">
+	{   "query": {
+    "filtered": {
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "date": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+            },
+            {
+              "terms": {
+                "name": [
+                  "我的name"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+	"size": 11
+}
+	</queryItem>
+	<queryItem domain="每小时数据" name="">
+	{
+  	"date": "我的date",
+  	"name": "我的name",
+    "body": "我的body"
+}
+	</queryItem>
+	<queryItem domain="全网汇总" name="">
+{   "query": {
+    "filtered": {
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+            },
+            {
+              "terms": {
+                "domain": [
+                  "PS域","PS域数通","IP承载网","城域网","CS_CE","PS_CE","CMNET"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+	"size": 0,
+			"aggs": {
+				"neName": {
+					"cardinality": {
+						"field": "neName"
+					}
+				}
+			}
+}
+	</queryItem>
+	<queryItem domain="核心网汇总" name="核心网汇总">
+{   "query": {
+    "filtered": {
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+            },
+            {
+              "terms": {
+                "domain": [
+                  "PS域",
+                  "PS域数通"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+	"size": 0,
+			"aggs": {
+				"neName": {
+					"cardinality": {
+						"field": "neName"
+					}
+				}
+			}
+}
+	</queryItem>
+	<queryItem domain="数据网汇总" name="数据网汇总">
+{   "query": {
+    "filtered": {
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+            },
+            {
+              "terms": {
+                "domain": [
+                  "IP承载网","城域网","CS_CE","PS_CE","CMNET"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+	"size": 0,
+			"aggs": {
+				"neName": {
+					"cardinality": {
+						"field": "neName"
+					}
+				}
+			}
+}
+
+	</queryItem>
+	<queryItem domain="地图" name="地图">
+	{"query": {
+    "filtered": {
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "city"
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<!-- start 首页对比图 -->
+	<queryItem domain="核心网机器日志对比图" name="">
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "terms": {
+            "domain": [
+              "PS域",
+              "PS域数通"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "size": 0,
+  "aggs": {
+    "recent_12h": {
+      "filter": {
+        "range": {
+          "eventTime": {
+            "from": "now-4h",
+            "to": "now+8h"
+          }
+        }
+      },
+      "aggs": {
+        "cities": {
+          "terms": {
+            "field": "vendor"
+          }
+        }
+      }
+    }
+  }
+}
+	</queryItem>
+	<queryItem domain="核心网事件日志对比图" name="">
+{
+    "query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ENABLE PKG"}},{"term":{"body":"add"}},{"term":{"body":"del"}},{"term":{"body":"set"}},{"term":{"body":"deluser"}},{"match_phrase":{"body":"RESTART SCTP"}},{"match_phrase":{"body":"STOP SCTP"}},{"match_phrase":{"body":"STOP ALLLNK"}},{"match_phrase":{"body":"RESET ALLLNK"}},{"match_phrase":{"body":"RESET RNC"}},{"match_phrase":{"body":"RESET ENODEB"}},{"match_phrase":{"body":"RESET BVC"}},{"match_phrase":{"body":"EXEC UNLOAD"}},{"match_phrase":{"body":"EXEC REBALANCE"}},{"match_phrase":{"body":"CLEAR DNSCACHE"}},{"match_phrase":{"body":"EXPORT USERINFO"}},{"match_phrase":{"body":"RESTORE DATA"}},{"match_phrase":{"body":"SYNASWP NORMAL"}},{"match_phrase":{"body":"SWP FORCE"}},{"match_phrase":{"body":"RESET NORMAL"}},{"match_phrase":{"body":"RESET FORCE"}},{"match_phrase":{"body":"登录成功"}},{"match_phrase":{"body":"登录失败"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"逻辑CPU上电成功通知信息"}},{"match_phrase":{"body":"单板倒换通知"}},{"match_phrase":{"body":"单板无法上电通知"}},{"match_phrase":{"body":"偶联断链"}},{"match_phrase":{"body":"增加路由失败"}},{"match_phrase":{"body":"子网内MAC地址冲突"}},{"match_phrase":{"body":"DNS服务器不可用"}},{"match_phrase":{"body":"网络中存在系统ID冲突的路由器"}},{"match_phrase":{"body":"MME上报MSC Server不可达"}},{"match_phrase":{"body":"PGW的IP地址不可用"}},{"match_phrase":{"body":"移动性管理类节点不可达"}},{"match_phrase":{"body":"CPU间数据同步加载失败"}},{"match_phrase":{"body":"主备同步失败"}},{"match_phrase":{"body":"当前路由区未配置"}},{"match_phrase":{"body":"内存不足"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"rollback configuration"}},{"match_phrase":{"body":"ip address"}},{"match_phrase":{"body":"bind authorization template"}},{"term":{"body":"reload"}},{"term":{"body":"power"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"telnet user log in"}},{"match_phrase":{"body":"telnet information incomplete"}},{"match_phrase":{"body":"GSU启动"}},{"match_phrase":{"body":"GSU宕机"}},{"match_phrase":{"body":"cpu上线"}},{"match_phrase":{"body":"板卡操作"}},{"match_phrase":{"body":"主备倒换"}},{"match_phrase":{"body":"GSU负荷均衡改变"}},{"match_phrase":{"body":"某接口地址改变"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}},
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"large restart"}},{"match_phrase":{"body":"small restart"}},{"match_phrase":{"body":"node restart"}},{"match_phrase":{"body":"ncb failover"}},{"match_phrase":{"body":"capsule failure"}},{"match_phrase":{"body":"pm failure"}}]}},{"term":{"logType":"isp.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"installation done"}},{"term":{"logType":"swm log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"sctpalarmstorm"}},{"term":{"body":"sctpippathfailure"}}]}},{"term":{"logType":"fm_alarm"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Timeout when communicating with HLR HSS"}},{"term":{"logType":"mobility_event_log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"useradd"}},{"term":{"body":"rhost"}}]}},{"term":{"logType":"security log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"terms":{"body":["create","restart","block","modify","active","manualsetsc","reboot","restore","rm","rmdir","check"]}},{"match_phrase":{"body":"set sm roleToUser"}},{"match_phrase":{"body":"set sm group"}},{"match_phrase":{"body":"get qos policymap g"}},{"match_phrase":{"body":"delete static route"}},{"match_phrase":{"body":"delete sm user"}},{"match_phrase":{"body":"delete sm role"}},{"match_phrase":{"body":"delete ospf"}},{"match_phrase":{"body":"delete ip service"}},{"match_phrase":{"body":"delete ip network subnet"}},{"match_phrase":{"body":"delete ip interface"}},{"match_phrase":{"body":"delete imsins"}},{"match_phrase":{"body":"delete eth vlan"}},{"match_phrase":{"body":"delete eth port"}},{"match_phrase":{"body":"delete dns"}},{"match_phrase":{"body":"delete diameter realm"}},{"match_phrase":{"body":"delete diameter peer"}},{"match_phrase":{"body":"delete diameter application"}},{"match_phrase":{"body":"add sm action"}},{"match_phrase":{"body":"add sm role"}},{"match_phrase":{"body":"add sm user"}}]}},{"term":{"logType":"cli_log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"PGW PDP limit reached"}},{"match_phrase":{"body":"block eqm"}},{"match_phrase":{"body":"Node down System"}},{"term":{"body":"deblock"}}]}},{"term":{"logType":"isp.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"shutdown"}},{"bool":{"must":[{"match_phrase":{"body":"set interfaces"}},{"term":{"body":"disable"}}]}},{"terms":{"body":["accesscontrolrule","accesstype","address","administrator","allowrulespace","alwaysallowedaccesscontrolrule","applicationid","bind","blocked","boardallocation","bufferlimit","ccvalues","cdrattribute","changelimit","chargingformat","context","controlcontext","cost","creation","creditcontrolroprofile","default","description","destinationrealm","diameterapplicationsystem","editcontent","enableaccesscontrolrules","enablededicatedbearer","encapsulation","encrypted","extendedheader","facility","failureaction","forceemptyfiles","ggsnaddress","ggsndeletespersecond","giaddressrange","gomaddressrange","gxprofile","headerrulesets","host","httpwspruleset","id","imeisv","imsbasedtelephonymmtel","imsi","ip","lacp","logicalinterface","lte","maximumage","maximumbitratedownlink","maximumbitrateuplink","maximumsize","messageforeverycontext","msisdn","name","netloc","networkaddress","networkport","networkprefix","noaccountingon","nodename","noreestablish","nosession","numberofcpb","numberofppb","parameter","payload","pdptype","peer","pgwenabled","plmnid","policy","policycontroldynamicgxprofile","port","priority","privilege","qoscontrolprofile","rattype","realm","redistribute","reload","rm","roamingclass","routinginstance","rulespace","secret","server ","service","sharedippool","shutdown","starts","stop","subscriptionid","terminate","timelimit","timeout","transfertype","traps ","useaccesscontrolrule","uservalue","versionlist","vipaddress","volume","wlan"]}},{"match_phrase":{"body":"TD SCDMA"}},{"match_phrase":{"body":"t3ResponseTime"}},{"match_phrase":{"body":"snmp target"}},{"match_phrase":{"body":"snmp  view"}},{"match_phrase":{"body":"snmp community"}},{"match_phrase":{"body":"sgi outgoing acl"}},{"match_phrase":{"body":"sgi incoming acl"}},{"match_phrase":{"body":"router dead interval"}},{"match_phrase":{"body":"retransmit interval"}},{"match_phrase":{"body":"PdpContext 1"}},{"match_phrase":{"body":"pcc release"}},{"match_phrase":{"body":"oam cli"}},{"match_phrase":{"body":"ntp mode"}},{"match_phrase":{"body":"network type"}},{"match_phrase":{"body":"n3Requests"}},{"match_phrase":{"body":"minimum links"}},{"match_phrase":{"body":"mgmt acl"}},{"match_phrase":{"body":"metric type"}},{"match_phrase":{"body":"md5"}},{"match_phrase":{"body":"maximum links"}},{"match_phrase":{"body":"load balance"}},{"match_phrase":{"body":"ipv6AddressAllocation"}},{"match_phrase":{"body":"inactivity timeout"}},{"match_phrase":{"body":"HSPA Evolution"}},{"match_phrase":{"body":"hello interval"}},{"match_phrase":{"body":"gre incoming acl"}},{"match_phrase":{"body":"GPRS/EDGE"}},{"match_phrase":{"body":"gnS5AddressRange"}},{"match_phrase":{"body":"gn incoming acl"}},{"match_phrase":{"body":"fast convergence"}},{"match_phrase":{"body":"dot1q pvc"}},{"match_phrase":{"body":"domain lookup"}},{"match_phrase":{"body":"Charging 1"}},{"match_phrase":{"body":"access group"}}]}},{"term":{"logType":"cli_commands"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"must":[{"term":{"body":"card"}},{"term":{"body":"commit"}}]}},{"bool":{"must":[{"match_phrase":{"body":"oam cli"}},{"term":{"body":"commit"}}]}},{"bool":{"must":[{"term":{"body":"notice"}},{"term":{"body":"host"}}]}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"threshold"}},{"terms":{"body":["accesscontrolrule","accesstype","address","administrator","allowrulespace","alwaysallowedaccesscontrolrule","applicationid","bind","blocked","boardallocation","bufferlimit","ccvalues","cdrattribute","changelimit","chargingformat","context","controlcontext","cost","creation","creditcontrolroprofile","default","description","destinationrealm","diameterapplicationsystem","editcontent","enableaccesscontrolrules","enablededicatedbearer","encapsulation","encrypted","extendedheader","facility","failureaction","forceemptyfiles","ggsnaddress","ggsndeletespersecond","giaddressrange","gomaddressrange","gxprofile","headerrulesets","host","httpwspruleset","id","imeisv","imsbasedtelephonymmtel","imsi","ip","lacp","logicalinterface","lte","maximumage","maximumbitratedownlink","maximumbitrateuplink","maximumsize","messageforeverycontext","msisdn","name","netloc","networkaddress","networkport","networkprefix","noaccountingon","nodename","noreestablish","nosession","numberofcpb","numberofppb","parameter","payload","pdptype","peer","pgwenabled","plmnid","policy","policycontroldynamicgxprofile","port","priority","privilege","qoscontrolprofile","rattype","realm","redistribute","reload","rm","roamingclass","routinginstance","rulespace","secret","server ","service","sharedippool","shutdown","starts","stop","subscriptionid","terminate","timelimit","timeout","transfertype","traps ","useaccesscontrolrule","uservalue","versionlist","vipaddress","volume","wlan"]}},{"match_phrase":{"body":"TD SCDMA"}},{"match_phrase":{"body":"t3ResponseTime"}},{"match_phrase":{"body":"snmp target"}},{"match_phrase":{"body":"snmp  view"}},{"match_phrase":{"body":"snmp community"}},{"match_phrase":{"body":"sgi outgoing acl"}},{"match_phrase":{"body":"sgi incoming acl"}},{"match_phrase":{"body":"router dead interval"}},{"match_phrase":{"body":"retransmit interval"}},{"match_phrase":{"body":"PdpContext 1"}},{"match_phrase":{"body":"pcc release"}},{"match_phrase":{"body":"oam cli"}},{"match_phrase":{"body":"ntp mode"}},{"match_phrase":{"body":"network type"}},{"match_phrase":{"body":"n3Requests"}},{"match_phrase":{"body":"minimum links"}},{"match_phrase":{"body":"mgmt acl"}},{"match_phrase":{"body":"metric type"}},{"match_phrase":{"body":"md5"}},{"match_phrase":{"body":"maximum links"}},{"match_phrase":{"body":"load balance"}},{"match_phrase":{"body":"ipv6AddressAllocation"}},{"match_phrase":{"body":"inactivity timeout"}},{"match_phrase":{"body":"HSPA Evolution"}},{"match_phrase":{"body":"hello interval"}},{"match_phrase":{"body":"gre incoming acl"}},{"match_phrase":{"body":"GPRS/EDGE"}},{"match_phrase":{"body":"gnS5AddressRange"}},{"match_phrase":{"body":"gn incoming acl"}},{"match_phrase":{"body":"fast convergence"}},{"match_phrase":{"body":"dot1q pvc"}},{"match_phrase":{"body":"domain lookup"}},{"match_phrase":{"body":"Charging 1"}},{"match_phrase":{"body":"access group"}}]}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"ulEvent 0x1d0700"}},{"terms":{"logType":["系统日志","CGP DEBUG日志"]}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":{"query":"MPU reset","slop":1}}},{"match_phrase":{"body":{"query":"SPU reset","slop":1}}},{"match_phrase":{"body":"物理实体复位"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"terms":{"neType":["SAEGW","MME"]}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Failed to alloc ueS1ConnIndex "}},{"terms":{"logType":["系统日志","USN DEBUG日志"]}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"登录"}},{"term":{"body":"add"}},{"term":{"body":"rmv"}},{"term":{"body":"mod"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"登出"}},{"term":{"body":"登入"}}]}},{"term":{"logType":"安全日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"MME"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"rxpower"}},{"term":{"body":"txpower"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"undo"}},{"term":{"body":"reboot"}},{"match_phrase":{"body":"ip route static"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":{"query":"status fail","slop":1}}},{"term":{"body":"authentication"}}]}},{"term":{"logType":"安全日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"SAEGW"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"term":{"body":"loginauthfail"}},{"match_phrase":{"body":"failed to login from"}}]}},{"match_phrase":{"body":"SYSTEM_REBOOT System is rebooting now"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"match_phrase":{"body":"LINK UPDOWN"}},{"match_phrase":{"body":"link status is DOWN"}}]}},{"match_phrase":{"body":"WEBOPT LOCALUSER"}},{"match_phrase":{"body":"ARP DUPIFIP"}},{"match_phrase":{"body":"WEBOPT UPDATESW"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"DRV DEV BRD ON OFF"}},{"match_phrase":{"body":"LINK UPDOWN"}},{"match_phrase":{"body":"Reboot device by command"}},{"match_phrase":{"body":"DLDP LINK UNIDIRECTIONAL"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"SSHS AUTH EXCEED RETRY TIMES"}},{"match_phrase":{"body":"ARP DUPIFIP"}},{"match_phrase":{"body":"ETHOAM OAM LINK DOWN"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ATK_ATTACK_REPORT"}},{"match_phrase":{"body":"ATK_STREAM_ALARM"}},{"match_phrase":{"body":"LS USER ROLE CHANGE"}}]}},{"term":{"logType":"安全日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"BOARD REBOOT"}},{"match_phrase":{"body":"LINK UPDOWN"}},{"match_phrase":{"body":"BRD ON OFF"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"match_phrase":{"body":"LINK UPDOWN"}},{"match_phrase":{"body":"link status is DOWN"}}]}},{"match_phrase":{"body":"ETHOAM OAM LINK DOWN"}},{"match_phrase":{"body":"ARP DUPIFIP"}},{"match_phrase":{"body":"ARP SRC MAC FOUND ATTACK"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"ifjionfail"}},{"term":{"body":"authsequencenumwrap"}},{"term":{"body":"ifbadrx"}},{"term":{"body":"ifrxbadpkt"}},{"match_phrase":{"body":"ASTPKT GADD ERR1"}}]}},{"term":{"logType":"协议日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"PAF TYPE LOSS ISSU"}},{"term":{"body":"authsequencenumwrap"}},{"term":{"body":"ifbadrx"}},{"term":{"body":"ifrxbadpkt"}}]}},{"term":{"logType":"协议日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"terms":{"body":["rstsla","smreset","lpurupgrade"]}},{"match_phrase":{"body":"ARP ENTRY CHECK"}},{"match_phrase":{"body":"ARP GLOBLE SPEEDLIMIT ALARM"}},{"match_phrase":{"body":"ARP IF SPEEDLIMIT ALARM"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ABT CHK REBOOTFAIL"}},{"match_phrase":{"body":"AUTHORITY CHANGE"}},{"term":{"body":"fastupgradefail"}},{"term":{"body":"ipcallocfail"}},{"term":{"body":"portnoavailable"}},{"match_phrase":{"body":"ARP ENTRY CHECK"}},{"match_phrase":{"body":"ARP GLOBLE SPEEDLIMIT ALARM"}},{"match_phrase":{"body":"ARP IF SPEEDLIMIT ALARM"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"rstsla"}},{"term":{"body":"smreset"}},{"term":{"body":"lpurupgrade"}},{"match_phrase":{"body":"ARP DUPLICATE IPADDR"}},{"match_phrase":{"body":"ARP ENTRY CHECK"}},{"match_phrase":{"body":"ARP GLOBLE SPEEDLIMIT ALARM"}},{"match_phrase":{"body":"ARP IF SPEEDLIMIT ALARM"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"Record command information"}},{"bool":{"must":[{"term":{"body":"cmdrecord"}},{"term":{"body":"level"}}]}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"arptrap"}},{"term":{"body":"iptrap"}},{"term":{"body":"reqmactrap"}}]}},{"term":{"logType":"安全日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"Failed to login"}},{"match_phrase":{"body":"Record command information"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"交换机"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"is pulled out abnormally"}},{"match_phrase":{"body":"changed to slave MPU"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"Command power off"}},{"match_phrase":{"body":"Command reset"}},{"match_phrase":{"body":"Command reboot"}},{"match_phrase":{"body":"Command level"}},{"match_phrase":{"body":"Failed to login"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"CpuUsage has reached its threshold"}},{"match_phrase":{"body":"MemUsage has reached its threshold"}},{"term":{"body":"sctpippathfailure"}}]}},{"term":{"logType":"fm_alarm"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"small restart"}},{"match_phrase":{"body":"large restart"}},{"match_phrase":{"body":"node restart"}}]}},{"term":{"body":"manual"}},{"term":{"body":"utc"}}]}},{"match_phrase":{"body":"ncb failover"}}]}},{"term":{"logType":"isp.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Timeout when communicating with external node"}},{"term":{"logType":"mobility_event_log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"APN Resolving error"}},{"term":{"logType":"session_event_log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"term":{"body":"rhost"}},{"term":{"logType":"security log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"term":{"body":"utc"}},{"match_phrase":{"body":"Node down"}},{"term":{"body":"system"}},{"term":{"body":"manual"}}]}},{"term":{"body":"dying"}},{"term":{"body":"cpuusagethresholdreached"}},{"term":{"body":"memoryusagethresholdreached"}},{"term":{"body":"bearersthresholdreachedonapn"}},{"term":{"body":"bearersthresholdreachedonnode"}},{"term":{"body":"bearersthresholdreachedonnodeperrattype"}}]}},{"term":{"logType":"alarm-history"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"controller switch over"}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"irrecoverable SW fault"}},{"term":{"logType":"isp.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"loginterface cli"}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ARP SENDER IP INVALID"}},{"match_phrase":{"body":"ARP RATE EXCEEDED"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ETHOAM OAM LINK DOWN"}},{"match_phrase":{"body":"Reboot device by command"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"WEBOPT_UPDATESW"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"LS USER ROLE CHANGE"}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"4418"}},{"match_phrase":{"body":"4419"}},{"match_phrase":{"body":"8007"}},{"match_phrase":{"body":"10048"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"110011"}},{"match_phrase":{"body":"400119"}},{"match_phrase":{"body":"105001"}},{"match_phrase":{"body":"110002"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"SET"}},{"match_phrase":{"body":"DEL"}},{"match_phrase":{"body":"ADD"}},{"match_phrase":{"body":"DEL IMS APN"}},{"match_phrase":{"body":"SET SOFTWARE PARAMETER"}},{"match_phrase":{"body":"SET OVERLOAD BASIC PARA"}},{"match_phrase":{"body":"SET MME SERVICE CONTROL"}},{"match_phrase":{"body":"SET MME OVERLOAD PARA"}},{"match_phrase":{"body":"SET MOBILE MANAGEMENT"}},{"match_phrase":{"body":"SET NAS INTEGCTRL"}},{"match_phrase":{"body":"SET INTEGCTRL"}},{"match_phrase":{"body":"SET GTP PARAMETER"}},{"match_phrase":{"body":"SET PACKET DOMAIN PARAMETER"}},{"match_phrase":{"body":"SET CAPACITY"}},{"match_phrase":{"body":"RESET FORCE"}},{"match_phrase":{"body":"RESET NORMAL"}},{"match_phrase":{"body":"SWP FORCE"}},{"match_phrase":{"body":"SWP NORMAL"}},{"match_phrase":{"body":"SET COMBOCFG"}},{"match_phrase":{"body":"SET OPC"}},{"match_phrase":{"body":"SYNA"}},{"match_phrase":{"body":"RESTORE DATA"}},{"match_phrase":{"body":"EXPORT USERINFO"}},{"match_phrase":{"body":"CLEAR DNSCACHE"}},{"match_phrase":{"body":"EXEC REBALANCE"}},{"match_phrase":{"body":"EXEC UNLOAD"}},{"match_phrase":{"body":"RESET BVC"}},{"match_phrase":{"body":"RESET ENODEB"}},{"match_phrase":{"body":"RESET RNC"}},{"match_phrase":{"body":"RESTART SCTP"}},{"match_phrase":{"body":"STOP SCTP"}},{"match_phrase":{"body":"STOP ALLLNK"}},{"match_phrase":{"body":"RESET ALLLNK"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"default dscp"}},{"match_phrase":{"body":"qci dscp map"}},{"match_phrase":{"body":"rewrite"}},{"match_phrase":{"body":"ip allocate mode"}},{"match_phrase":{"body":"pcscf address"}},{"match_phrase":{"body":"pcscf profile"}},{"match_phrase":{"body":"pcc pcrf"}},{"match_phrase":{"body":"pcc access"}},{"match_phrase":{"body":"charge online ocs server"}},{"match_phrase":{"body":"ippool"}},{"match_phrase":{"body":"idle time lte"}},{"match_phrase":{"body":"idle time"}},{"match_phrase":{"body":"tcp optimize control"}},{"match_phrase":{"body":"charge charging mode"}},{"match_phrase":{"body":"alias"}},{"match_phrase":{"body":"access"}},{"match_phrase":{"body":"charge control"}},{"match_phrase":{"body":"control rule"}},{"match_phrase":{"body":"charge rule"}},{"match_phrase":{"body":"vrf"}},{"match_phrase":{"body":"segment"}},{"match_phrase":{"body":"cg profile"}},{"match_phrase":{"body":"s5s8-gtpu-ip-address"}},{"match_phrase":{"body":"s5s8-gtpc-ip-address"}},{"match_phrase":{"body":"s11-gtp-ip-address"}},{"match_phrase":{"body":"deactive pdp"}},{"match_phrase":{"body":"flow hash"}},{"match_phrase":{"body":"network"}},{"match_phrase":{"body":"router ospf"}},{"match_phrase":{"body":"ip route"}},{"match_phrase":{"body":"ip address"}},{"match_phrase":{"body":"power"}},{"match_phrase":{"body":"reload"}},{"match_phrase":{"body":"rollback configuration"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}}
+		]  
+	 }
+	},
+	"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			},
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "vendor"
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="核心网预警日志对比图" name="">
+{
+   "query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"is pulled out abnormally"}},{"match_phrase":{"body":"changed to slave MPU"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"Command power off"}},{"match_phrase":{"body":"Command reset"}},{"match_phrase":{"body":"Command reboot"}},{"match_phrase":{"body":"Command level"}},{"match_phrase":{"body":"Failed to login"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"CpuUsage has reached its threshold"}},{"match_phrase":{"body":"MemUsage has reached its threshold"}},{"term":{"body":"sctpippathfailure"}}]}},{"term":{"logType":"fm_alarm"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"small restart"}},{"match_phrase":{"body":"large restart"}},{"match_phrase":{"body":"node restart"}}]}},{"term":{"body":"manual"}},{"term":{"body":"utc"}}]}},{"match_phrase":{"body":"ncb failover"}}]}},{"term":{"logType":"isp.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Timeout when communicating with external node"}},{"term":{"logType":"mobility_event_log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"APN Resolving error"}},{"term":{"logType":"session_event_log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"term":{"body":"rhost"}},{"term":{"logType":"security log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"term":{"body":"utc"}},{"match_phrase":{"body":"Node down"}},{"term":{"body":"system"}},{"term":{"body":"manual"}}]}},{"term":{"body":"dying"}},{"term":{"body":"cpuusagethresholdreached"}},{"term":{"body":"memoryusagethresholdreached"}},{"term":{"body":"bearersthresholdreachedonapn"}},{"term":{"body":"bearersthresholdreachedonnode"}},{"term":{"body":"bearersthresholdreachedonnodeperrattype"}}]}},{"term":{"logType":"alarm-history"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"controller switch over"}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"irrecoverable SW fault"}},{"term":{"logType":"isp.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"loginterface cli"}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ARP SENDER IP INVALID"}},{"match_phrase":{"body":"ARP RATE EXCEEDED"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ETHOAM OAM LINK DOWN"}},{"match_phrase":{"body":"Reboot device by command"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"WEBOPT_UPDATESW"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"LS USER ROLE CHANGE"}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"4418"}},{"match_phrase":{"body":"4419"}},{"match_phrase":{"body":"8007"}},{"match_phrase":{"body":"10048"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"110011"}},{"match_phrase":{"body":"400119"}},{"match_phrase":{"body":"105001"}},{"match_phrase":{"body":"110002"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"SET"}},{"match_phrase":{"body":"DEL"}},{"match_phrase":{"body":"ADD"}},{"match_phrase":{"body":"DEL IMS APN"}},{"match_phrase":{"body":"SET SOFTWARE PARAMETER"}},{"match_phrase":{"body":"SET OVERLOAD BASIC PARA"}},{"match_phrase":{"body":"SET MME SERVICE CONTROL"}},{"match_phrase":{"body":"SET MME OVERLOAD PARA"}},{"match_phrase":{"body":"SET MOBILE MANAGEMENT"}},{"match_phrase":{"body":"SET NAS INTEGCTRL"}},{"match_phrase":{"body":"SET INTEGCTRL"}},{"match_phrase":{"body":"SET GTP PARAMETER"}},{"match_phrase":{"body":"SET PACKET DOMAIN PARAMETER"}},{"match_phrase":{"body":"SET CAPACITY"}},{"match_phrase":{"body":"RESET FORCE"}},{"match_phrase":{"body":"RESET NORMAL"}},{"match_phrase":{"body":"SWP FORCE"}},{"match_phrase":{"body":"SWP NORMAL"}},{"match_phrase":{"body":"SET COMBOCFG"}},{"match_phrase":{"body":"SET OPC"}},{"match_phrase":{"body":"SYNA"}},{"match_phrase":{"body":"RESTORE DATA"}},{"match_phrase":{"body":"EXPORT USERINFO"}},{"match_phrase":{"body":"CLEAR DNSCACHE"}},{"match_phrase":{"body":"EXEC REBALANCE"}},{"match_phrase":{"body":"EXEC UNLOAD"}},{"match_phrase":{"body":"RESET BVC"}},{"match_phrase":{"body":"RESET ENODEB"}},{"match_phrase":{"body":"RESET RNC"}},{"match_phrase":{"body":"RESTART SCTP"}},{"match_phrase":{"body":"STOP SCTP"}},{"match_phrase":{"body":"STOP ALLLNK"}},{"match_phrase":{"body":"RESET ALLLNK"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"default dscp"}},{"match_phrase":{"body":"qci dscp map"}},{"match_phrase":{"body":"rewrite"}},{"match_phrase":{"body":"ip allocate mode"}},{"match_phrase":{"body":"pcscf address"}},{"match_phrase":{"body":"pcscf profile"}},{"match_phrase":{"body":"pcc pcrf"}},{"match_phrase":{"body":"pcc access"}},{"match_phrase":{"body":"charge online ocs server"}},{"match_phrase":{"body":"ippool"}},{"match_phrase":{"body":"idle time lte"}},{"match_phrase":{"body":"idle time"}},{"match_phrase":{"body":"tcp optimize control"}},{"match_phrase":{"body":"charge charging mode"}},{"match_phrase":{"body":"alias"}},{"match_phrase":{"body":"access"}},{"match_phrase":{"body":"charge control"}},{"match_phrase":{"body":"control rule"}},{"match_phrase":{"body":"charge rule"}},{"match_phrase":{"body":"vrf"}},{"match_phrase":{"body":"segment"}},{"match_phrase":{"body":"cg profile"}},{"match_phrase":{"body":"s5s8-gtpu-ip-address"}},{"match_phrase":{"body":"s5s8-gtpc-ip-address"}},{"match_phrase":{"body":"s11-gtp-ip-address"}},{"match_phrase":{"body":"deactive pdp"}},{"match_phrase":{"body":"flow hash"}},{"match_phrase":{"body":"network"}},{"match_phrase":{"body":"router ospf"}},{"match_phrase":{"body":"ip route"}},{"match_phrase":{"body":"ip address"}},{"match_phrase":{"body":"power"}},{"match_phrase":{"body":"reload"}},{"match_phrase":{"body":"rollback configuration"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}}
+	    ]  
+	 }
+	},
+	"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		   "filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			},
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "vendor"
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="数据网机器日志对比图" name="">
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "terms": {
+            "domain": [
+             "IP承载网","城域网","CS_CE","PS_CE","CMNET"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "size": 0,
+  "aggs": {
+    "recent_12h": {
+      "filter": {
+        "range": {
+          "eventTime": {
+            "from": "now-4h",
+            "to": "now+8h"
+          }
+        }
+      },
+      "aggs": {
+        "cities": {
+          "terms": {
+            "field": "vendor"
+          }
+        }
+      }
+    }
+  }
+}
+	</queryItem>
+	<queryItem domain="数据网事件日志对比图" name="">
+{
+    "query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"start ospf"}},{"match_phrase":{"body":"stop ospf"}},{"match_phrase":{"body":"restart ospf"}},{"match_phrase":{"body":"start vrrp"}},{"match_phrase":{"body":"stop vrrp"}},{"match_phrase":{"body":"restart vrrp"}},{"bool":{"must":[{"match_phrase":{"body":"failed for all authentication methods"}},{"term":{"body":"error"}}]}},{"bool":{"must":[{"term":{"body":"config"}},{"match_phrase":{"body":"save config"}}]}},{"bool":{"must":[{"term":{"body":"config"}},{"terms":{"body":["port","card"]}},{"term":{"body":"shut"}}]}},{"match_phrase":{"body":"link state DOWN"}},{"match_phrase":{"body":"restarting csm now"}},{"match_phrase":{"body":"restarting ospf now"}},{"term":{"body":"removed"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"match_phrase":{"body":"authentication failed using RADIUS records"}},{"term":{"body":"error"}}]}},{"match_phrase":{"body":"link state DOWN"}},{"term":{"body":"removed"}}]}},{"term":{"logType":"安全日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"USER RESET"}},{"match_phrase":{"body":"FSMTIMEOUT RESET"}},{"bool":{"must":[{"term":{"body":"updown"}},{"match_phrase":{"body":"changed state to down"}}]}},{"bool":{"must":[{"match_phrase":{"body":"MGBL config 6 DB COMMIT"}},{"match_phrase":{"body":"configuration committed by user"}}]}},{"match_phrase":{"body":"security login 4 AUTHEN FAILED"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"城域网"}}]}},{"term":{"vendor":"思科"}},{"term":{"neType":"路由器"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"linkdown"}},{"match_phrase":{"body":"ssh user login failed"}},{"match_phrase":{"body":"enable admin"}},{"term":{"body":"tmnxeqcardremoved"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"城域网"}}]}},{"term":{"vendor":"阿朗"}},{"term":{"neType":"路由器"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"term":{"body":"dos"}},{"term":{"logType":"安全日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"城域网"}}]}},{"term":{"vendor":"阿朗"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"term":{"body":"ifjionfail"}},{"term":{"logType":"协议日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"term":{"body":"ifjionfail"}},{"term":{"logType":"协议日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"reboot"}},{"match_phrase":{"body":"Record command information"}},{"bool":{"must":[{"term":{"body":"cmdrecord"}},{"term":{"body":"level"}}]}}]}},{"term":{"logType":"操作日志"}},{"bool":{"should":[{"term":{"domain":"城域网"}},{"term":{"domain":"IP承载网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"reboot"}},{"match_phrase":{"body":"Record command information"}},{"bool":{"must":[{"term":{"body":"cmdrecord"}},{"term":{"body":"level"}}]}}]}},{"term":{"logType":"操作日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"portnoavailable"}},{"term":{"body":"lpurupgrade"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"portnoavailable"}},{"term":{"body":"lpurupgrade"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Failed to login"}},{"term":{"logType":"安全日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"term":{"neType":"路由器"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Failed to login"}},{"term":{"logType":"安全日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"term":{"neType":"交换机"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"undergoing a cold start"}},{"match_phrase":{"body":"undergoing a warm start"}},{"term":{"body":"reload"}},{"match_phrase":{"body":"The Privileged mode password is changed"}},{"match_phrase":{"body":"NPC Start Working"}},{"match_phrase":{"body":"The line board is offline"}},{"match_phrase":{"body":"conflicts with our IP address"}},{"match_phrase":{"body":"ACL mp update session 100 but get buffer fail"}},{"match_phrase":{"body":"Port Down"}},{"match_phrase":{"body":"The enable password has been changed by oam shell"}},{"match_phrase":{"body":"arp packet conflicts with our MAC"}},{"match_phrase":{"body":"invalid source address"}},{"match_phrase":{"body":"invalid Dest address"}},{"match_phrase":{"body":"attacked by tcp syn flood"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"LS USER ROLE CHANGE"}},{"match_phrase":{"body":"LINK UPDOWN"}},{"match_phrase":{"body":"DLDP LINK UNIDIRECTIONAL"}},{"match_phrase":{"body":"Reboot device by command"}},{"match_phrase":{"body":"DRV DEV BRD ON OFF"}},{"match_phrase":{"body":"SSHS AUTH EXCEED RETRY TIMES"}},{"match_phrase":{"body":"ARP DUPIFIP"}},{"match_phrase":{"body":"ETHOAM OAM LINK DOWN"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"USER RESET"}},{"match_phrase":{"body":"FSMTIMEOUT RESET"}},{"bool":{"must":[{"term":{"body":"updown"}},{"match_phrase":{"body":"changed state to down"}}]}},{"bool":{"must":[{"match_phrase":{"body":"MGBL config 6 DB COMMIT"}},{"match_phrase":{"body":"configuration committed by user"}}]}},{"match_phrase":{"body":"security login 4 AUTHEN FAILED"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"思科"}},{"term":{"neType":"交换机"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"Too many password failures for"}},{"match_phrase":{"body":"request chassis"}},{"match_phrase":{"body":"UI CFG AUDIT OTHER"}},{"match_phrase":{"body":"Fru Offline"}},{"match_phrase":{"body":"FRU power off"}},{"match_phrase":{"body":"SNMP TRAP LINK DOWN"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"Juniper"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"is pulled out abnormally"}},{"match_phrase":{"body":"changed to slave MPU"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"IP承载网"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"Command power off"}},{"match_phrase":{"body":"Command reset"}},{"match_phrase":{"body":"Command reboot"}},{"match_phrase":{"body":"Command level"}},{"match_phrase":{"body":"Failed to login"}}]}},{"term":{"logType":"操作日志"}},{"bool":{"should":[{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"IP承载网"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"undergoing a cold start"}},{"match_phrase":{"body":"CPU load exceeds the lowest threshold NP(M) panel "}},{"match_phrase":{"body":"IGMP SNOOPING current host num is 32000 reaches the max host memory threshold 100"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"IP承载网"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"交换机"}}]}},
+	     {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"match_phrase":{"body":"smchip isr base"}},{"match_phrase":{"body":"UnCorrectable ECC"}}]}},{"match_phrase":{"body":"request chassis"}},{"match_phrase":{"body":"power off"}},{"match_phrase":{"body":"power on"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"Juniper"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"term":{"body":"config"}},{"term":{"body":"port"}},{"term":{"body":"shut"}}]}},{"match_phrase":{"body":"crash detected"}},{"term":{"body":"removed"}},{"term":{"body":"inserted"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ARP SENDER IP INVALID"}},{"match_phrase":{"body":"ARP RATE EXCEEDED"}},{"match_phrase":{"body":"ETHOAM OAM LINK DOWN"}},{"match_phrase":{"body":"Reboot device by command"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"USER RESET"}},{"bool":{"must":[{"match_phrase":{"body":"MGBL config 6 DB COMMIT"}},{"match_phrase":{"body":"configuration committed by user"}}]}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"城域网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"思科"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"term":{"body":"command"}},{"term":{"logType":"操作日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}}],"must_not":{"terms":{"body":["show","display","ping","trace"],"minimum_match":1}}}}
+		]  
+	 }
+	},
+	"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			},
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "vendor"
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="数据网预警日志对比图" name="">
+{
+    "query": {
+	 "bool":{
+	   "should":[
+	      {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"is pulled out abnormally"}},{"match_phrase":{"body":"changed to slave MPU"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"IP承载网"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+		  {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"Command power off"}},{"match_phrase":{"body":"Command reset"}},{"match_phrase":{"body":"Command reboot"}},{"match_phrase":{"body":"Command level"}},{"match_phrase":{"body":"Failed to login"}}]}},{"term":{"logType":"操作日志"}},{"bool":{"should":[{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"IP承载网"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+	      {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"undergoing a cold start"}},{"match_phrase":{"body":"CPU load exceeds the lowest threshold NP(M) panel "}},{"match_phrase":{"body":"IGMP SNOOPING current host num is 32000 reaches the max host memory threshold 100"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"IP承载网"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"交换机"}}]}},
+	      {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"match_phrase":{"body":"smchip isr base"}},{"match_phrase":{"body":"UnCorrectable ECC"}}]}},{"match_phrase":{"body":"request chassis"}},{"match_phrase":{"body":"power off"}},{"match_phrase":{"body":"power on"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"Juniper"}},{"term":{"neType":"路由器"}}]}},
+		  {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"term":{"body":"config"}},{"term":{"body":"port"}},{"term":{"body":"shut"}}]}},{"match_phrase":{"body":"crash detected"}},{"term":{"body":"removed"}},{"term":{"body":"inserted"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"路由器"}}]}},
+		  {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ARP SENDER IP INVALID"}},{"match_phrase":{"body":"ARP RATE EXCEEDED"}},{"match_phrase":{"body":"ETHOAM OAM LINK DOWN"}},{"match_phrase":{"body":"Reboot device by command"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		  {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"USER RESET"}},{"bool":{"must":[{"match_phrase":{"body":"MGBL config 6 DB COMMIT"}},{"match_phrase":{"body":"configuration committed by user"}}]}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"城域网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"思科"}},{"term":{"neType":"交换机"}}]}}
+	    ]  
+	 }
+	},
+	"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			},
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "vendor"
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	
+	<!-- start 首页漏斗图 -->
+	<queryItem domain="漏斗图机器日志" name="机器日志" >
+{
+  "query": {
+    "filtered": {
+      "filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+            }
+        }
+  },
+	"size": 0,
+	"aggs": {
+		"recent_12h": {
+			"filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			}
+		}
+	}
+}
+	</queryItem>
+
+	<queryItem domain="漏斗图日志事件" name="日志事件" >
+{   
+    "query":{
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ENABLE PKG"}},{"term":{"body":"add"}},{"term":{"body":"del"}},{"term":{"body":"set"}},{"term":{"body":"deluser"}},{"match_phrase":{"body":"RESTART SCTP"}},{"match_phrase":{"body":"STOP SCTP"}},{"match_phrase":{"body":"STOP ALLLNK"}},{"match_phrase":{"body":"RESET ALLLNK"}},{"match_phrase":{"body":"RESET RNC"}},{"match_phrase":{"body":"RESET ENODEB"}},{"match_phrase":{"body":"RESET BVC"}},{"match_phrase":{"body":"EXEC UNLOAD"}},{"match_phrase":{"body":"EXEC REBALANCE"}},{"match_phrase":{"body":"CLEAR DNSCACHE"}},{"match_phrase":{"body":"EXPORT USERINFO"}},{"match_phrase":{"body":"RESTORE DATA"}},{"match_phrase":{"body":"SYNASWP NORMAL"}},{"match_phrase":{"body":"SWP FORCE"}},{"match_phrase":{"body":"RESET NORMAL"}},{"match_phrase":{"body":"RESET FORCE"}},{"match_phrase":{"body":"登录成功"}},{"match_phrase":{"body":"登录失败"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"逻辑CPU上电成功通知信息"}},{"match_phrase":{"body":"单板倒换通知"}},{"match_phrase":{"body":"单板无法上电通知"}},{"match_phrase":{"body":"偶联断链"}},{"match_phrase":{"body":"增加路由失败"}},{"match_phrase":{"body":"子网内MAC地址冲突"}},{"match_phrase":{"body":"DNS服务器不可用"}},{"match_phrase":{"body":"网络中存在系统ID冲突的路由器"}},{"match_phrase":{"body":"MME上报MSC Server不可达"}},{"match_phrase":{"body":"PGW的IP地址不可用"}},{"match_phrase":{"body":"移动性管理类节点不可达"}},{"match_phrase":{"body":"CPU间数据同步加载失败"}},{"match_phrase":{"body":"主备同步失败"}},{"match_phrase":{"body":"当前路由区未配置"}},{"match_phrase":{"body":"内存不足"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"rollback configuration"}},{"match_phrase":{"body":"ip address"}},{"match_phrase":{"body":"bind authorization template"}},{"term":{"body":"reload"}},{"term":{"body":"power"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"telnet user log in"}},{"match_phrase":{"body":"telnet information incomplete"}},{"match_phrase":{"body":"GSU启动"}},{"match_phrase":{"body":"GSU宕机"}},{"match_phrase":{"body":"cpu上线"}},{"match_phrase":{"body":"板卡操作"}},{"match_phrase":{"body":"主备倒换"}},{"match_phrase":{"body":"GSU负荷均衡改变"}},{"match_phrase":{"body":"某接口地址改变"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}},
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"large restart"}},{"match_phrase":{"body":"small restart"}},{"match_phrase":{"body":"node restart"}},{"match_phrase":{"body":"ncb failover"}},{"match_phrase":{"body":"capsule failure"}},{"match_phrase":{"body":"pm failure"}}]}},{"term":{"logType":"isp.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"installation done"}},{"term":{"logType":"swm log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"sctpalarmstorm"}},{"term":{"body":"sctpippathfailure"}}]}},{"term":{"logType":"fm_alarm"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Timeout when communicating with HLR HSS"}},{"term":{"logType":"mobility_event_log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"useradd"}},{"term":{"body":"rhost"}}]}},{"term":{"logType":"security log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"terms":{"body":["create","restart","block","modify","active","manualsetsc","reboot","restore","rm","rmdir","check"]}},{"match_phrase":{"body":"set sm roleToUser"}},{"match_phrase":{"body":"set sm group"}},{"match_phrase":{"body":"get qos policymap g"}},{"match_phrase":{"body":"delete static route"}},{"match_phrase":{"body":"delete sm user"}},{"match_phrase":{"body":"delete sm role"}},{"match_phrase":{"body":"delete ospf"}},{"match_phrase":{"body":"delete ip service"}},{"match_phrase":{"body":"delete ip network subnet"}},{"match_phrase":{"body":"delete ip interface"}},{"match_phrase":{"body":"delete imsins"}},{"match_phrase":{"body":"delete eth vlan"}},{"match_phrase":{"body":"delete eth port"}},{"match_phrase":{"body":"delete dns"}},{"match_phrase":{"body":"delete diameter realm"}},{"match_phrase":{"body":"delete diameter peer"}},{"match_phrase":{"body":"delete diameter application"}},{"match_phrase":{"body":"add sm action"}},{"match_phrase":{"body":"add sm role"}},{"match_phrase":{"body":"add sm user"}}]}},{"term":{"logType":"cli_log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"PGW PDP limit reached"}},{"match_phrase":{"body":"block eqm"}},{"match_phrase":{"body":"Node down System"}},{"term":{"body":"deblock"}}]}},{"term":{"logType":"isp.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"shutdown"}},{"bool":{"must":[{"match_phrase":{"body":"set interfaces"}},{"term":{"body":"disable"}}]}},{"terms":{"body":["accesscontrolrule","accesstype","address","administrator","allowrulespace","alwaysallowedaccesscontrolrule","applicationid","bind","blocked","boardallocation","bufferlimit","ccvalues","cdrattribute","changelimit","chargingformat","context","controlcontext","cost","creation","creditcontrolroprofile","default","description","destinationrealm","diameterapplicationsystem","editcontent","enableaccesscontrolrules","enablededicatedbearer","encapsulation","encrypted","extendedheader","facility","failureaction","forceemptyfiles","ggsnaddress","ggsndeletespersecond","giaddressrange","gomaddressrange","gxprofile","headerrulesets","host","httpwspruleset","id","imeisv","imsbasedtelephonymmtel","imsi","ip","lacp","logicalinterface","lte","maximumage","maximumbitratedownlink","maximumbitrateuplink","maximumsize","messageforeverycontext","msisdn","name","netloc","networkaddress","networkport","networkprefix","noaccountingon","nodename","noreestablish","nosession","numberofcpb","numberofppb","parameter","payload","pdptype","peer","pgwenabled","plmnid","policy","policycontroldynamicgxprofile","port","priority","privilege","qoscontrolprofile","rattype","realm","redistribute","reload","rm","roamingclass","routinginstance","rulespace","secret","server ","service","sharedippool","shutdown","starts","stop","subscriptionid","terminate","timelimit","timeout","transfertype","traps ","useaccesscontrolrule","uservalue","versionlist","vipaddress","volume","wlan"]}},{"match_phrase":{"body":"TD SCDMA"}},{"match_phrase":{"body":"t3ResponseTime"}},{"match_phrase":{"body":"snmp target"}},{"match_phrase":{"body":"snmp  view"}},{"match_phrase":{"body":"snmp community"}},{"match_phrase":{"body":"sgi outgoing acl"}},{"match_phrase":{"body":"sgi incoming acl"}},{"match_phrase":{"body":"router dead interval"}},{"match_phrase":{"body":"retransmit interval"}},{"match_phrase":{"body":"PdpContext 1"}},{"match_phrase":{"body":"pcc release"}},{"match_phrase":{"body":"oam cli"}},{"match_phrase":{"body":"ntp mode"}},{"match_phrase":{"body":"network type"}},{"match_phrase":{"body":"n3Requests"}},{"match_phrase":{"body":"minimum links"}},{"match_phrase":{"body":"mgmt acl"}},{"match_phrase":{"body":"metric type"}},{"match_phrase":{"body":"md5"}},{"match_phrase":{"body":"maximum links"}},{"match_phrase":{"body":"load balance"}},{"match_phrase":{"body":"ipv6AddressAllocation"}},{"match_phrase":{"body":"inactivity timeout"}},{"match_phrase":{"body":"HSPA Evolution"}},{"match_phrase":{"body":"hello interval"}},{"match_phrase":{"body":"gre incoming acl"}},{"match_phrase":{"body":"GPRS/EDGE"}},{"match_phrase":{"body":"gnS5AddressRange"}},{"match_phrase":{"body":"gn incoming acl"}},{"match_phrase":{"body":"fast convergence"}},{"match_phrase":{"body":"dot1q pvc"}},{"match_phrase":{"body":"domain lookup"}},{"match_phrase":{"body":"Charging 1"}},{"match_phrase":{"body":"access group"}}]}},{"term":{"logType":"cli_commands"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"must":[{"term":{"body":"card"}},{"term":{"body":"commit"}}]}},{"bool":{"must":[{"match_phrase":{"body":"oam cli"}},{"term":{"body":"commit"}}]}},{"bool":{"must":[{"term":{"body":"notice"}},{"term":{"body":"host"}}]}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"threshold"}},{"terms":{"body":["accesscontrolrule","accesstype","address","administrator","allowrulespace","alwaysallowedaccesscontrolrule","applicationid","bind","blocked","boardallocation","bufferlimit","ccvalues","cdrattribute","changelimit","chargingformat","context","controlcontext","cost","creation","creditcontrolroprofile","default","description","destinationrealm","diameterapplicationsystem","editcontent","enableaccesscontrolrules","enablededicatedbearer","encapsulation","encrypted","extendedheader","facility","failureaction","forceemptyfiles","ggsnaddress","ggsndeletespersecond","giaddressrange","gomaddressrange","gxprofile","headerrulesets","host","httpwspruleset","id","imeisv","imsbasedtelephonymmtel","imsi","ip","lacp","logicalinterface","lte","maximumage","maximumbitratedownlink","maximumbitrateuplink","maximumsize","messageforeverycontext","msisdn","name","netloc","networkaddress","networkport","networkprefix","noaccountingon","nodename","noreestablish","nosession","numberofcpb","numberofppb","parameter","payload","pdptype","peer","pgwenabled","plmnid","policy","policycontroldynamicgxprofile","port","priority","privilege","qoscontrolprofile","rattype","realm","redistribute","reload","rm","roamingclass","routinginstance","rulespace","secret","server ","service","sharedippool","shutdown","starts","stop","subscriptionid","terminate","timelimit","timeout","transfertype","traps ","useaccesscontrolrule","uservalue","versionlist","vipaddress","volume","wlan"]}},{"match_phrase":{"body":"TD SCDMA"}},{"match_phrase":{"body":"t3ResponseTime"}},{"match_phrase":{"body":"snmp target"}},{"match_phrase":{"body":"snmp  view"}},{"match_phrase":{"body":"snmp community"}},{"match_phrase":{"body":"sgi outgoing acl"}},{"match_phrase":{"body":"sgi incoming acl"}},{"match_phrase":{"body":"router dead interval"}},{"match_phrase":{"body":"retransmit interval"}},{"match_phrase":{"body":"PdpContext 1"}},{"match_phrase":{"body":"pcc release"}},{"match_phrase":{"body":"oam cli"}},{"match_phrase":{"body":"ntp mode"}},{"match_phrase":{"body":"network type"}},{"match_phrase":{"body":"n3Requests"}},{"match_phrase":{"body":"minimum links"}},{"match_phrase":{"body":"mgmt acl"}},{"match_phrase":{"body":"metric type"}},{"match_phrase":{"body":"md5"}},{"match_phrase":{"body":"maximum links"}},{"match_phrase":{"body":"load balance"}},{"match_phrase":{"body":"ipv6AddressAllocation"}},{"match_phrase":{"body":"inactivity timeout"}},{"match_phrase":{"body":"HSPA Evolution"}},{"match_phrase":{"body":"hello interval"}},{"match_phrase":{"body":"gre incoming acl"}},{"match_phrase":{"body":"GPRS/EDGE"}},{"match_phrase":{"body":"gnS5AddressRange"}},{"match_phrase":{"body":"gn incoming acl"}},{"match_phrase":{"body":"fast convergence"}},{"match_phrase":{"body":"dot1q pvc"}},{"match_phrase":{"body":"domain lookup"}},{"match_phrase":{"body":"Charging 1"}},{"match_phrase":{"body":"access group"}}]}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"ulEvent 0x1d0700"}},{"terms":{"logType":["系统日志","CGP DEBUG日志"]}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":{"query":"MPU reset","slop":1}}},{"match_phrase":{"body":{"query":"SPU reset","slop":1}}},{"match_phrase":{"body":"物理实体复位"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"terms":{"neType":["SAEGW","MME"]}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Failed to alloc ueS1ConnIndex "}},{"terms":{"logType":["系统日志","USN DEBUG日志"]}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"登录"}},{"term":{"body":"add"}},{"term":{"body":"rmv"}},{"term":{"body":"mod"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"登出"}},{"term":{"body":"登入"}}]}},{"term":{"logType":"安全日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"MME"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"rxpower"}},{"term":{"body":"txpower"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"undo"}},{"term":{"body":"reboot"}},{"match_phrase":{"body":"ip route static"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":{"query":"status fail","slop":1}}},{"term":{"body":"authentication"}}]}},{"term":{"logType":"安全日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"SAEGW"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"term":{"body":"loginauthfail"}},{"match_phrase":{"body":"failed to login from"}}]}},{"match_phrase":{"body":"SYSTEM_REBOOT System is rebooting now"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"match_phrase":{"body":"LINK UPDOWN"}},{"match_phrase":{"body":"link status is DOWN"}}]}},{"match_phrase":{"body":"WEBOPT LOCALUSER"}},{"match_phrase":{"body":"ARP DUPIFIP"}},{"match_phrase":{"body":"WEBOPT UPDATESW"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"DRV DEV BRD ON OFF"}},{"match_phrase":{"body":"LINK UPDOWN"}},{"match_phrase":{"body":"Reboot device by command"}},{"match_phrase":{"body":"DLDP LINK UNIDIRECTIONAL"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"SSHS AUTH EXCEED RETRY TIMES"}},{"match_phrase":{"body":"ARP DUPIFIP"}},{"match_phrase":{"body":"ETHOAM OAM LINK DOWN"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ATK_ATTACK_REPORT"}},{"match_phrase":{"body":"ATK_STREAM_ALARM"}},{"match_phrase":{"body":"LS USER ROLE CHANGE"}}]}},{"term":{"logType":"安全日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"BOARD REBOOT"}},{"match_phrase":{"body":"LINK UPDOWN"}},{"match_phrase":{"body":"BRD ON OFF"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"match_phrase":{"body":"LINK UPDOWN"}},{"match_phrase":{"body":"link status is DOWN"}}]}},{"match_phrase":{"body":"ETHOAM OAM LINK DOWN"}},{"match_phrase":{"body":"ARP DUPIFIP"}},{"match_phrase":{"body":"ARP SRC MAC FOUND ATTACK"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"ifjionfail"}},{"term":{"body":"authsequencenumwrap"}},{"term":{"body":"ifbadrx"}},{"term":{"body":"ifrxbadpkt"}},{"match_phrase":{"body":"ASTPKT GADD ERR1"}}]}},{"term":{"logType":"协议日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"PAF TYPE LOSS ISSU"}},{"term":{"body":"authsequencenumwrap"}},{"term":{"body":"ifbadrx"}},{"term":{"body":"ifrxbadpkt"}}]}},{"term":{"logType":"协议日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"terms":{"body":["rstsla","smreset","lpurupgrade"]}},{"match_phrase":{"body":"ARP ENTRY CHECK"}},{"match_phrase":{"body":"ARP GLOBLE SPEEDLIMIT ALARM"}},{"match_phrase":{"body":"ARP IF SPEEDLIMIT ALARM"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ABT CHK REBOOTFAIL"}},{"match_phrase":{"body":"AUTHORITY CHANGE"}},{"term":{"body":"fastupgradefail"}},{"term":{"body":"ipcallocfail"}},{"term":{"body":"portnoavailable"}},{"match_phrase":{"body":"ARP ENTRY CHECK"}},{"match_phrase":{"body":"ARP GLOBLE SPEEDLIMIT ALARM"}},{"match_phrase":{"body":"ARP IF SPEEDLIMIT ALARM"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"rstsla"}},{"term":{"body":"smreset"}},{"term":{"body":"lpurupgrade"}},{"match_phrase":{"body":"ARP DUPLICATE IPADDR"}},{"match_phrase":{"body":"ARP ENTRY CHECK"}},{"match_phrase":{"body":"ARP GLOBLE SPEEDLIMIT ALARM"}},{"match_phrase":{"body":"ARP IF SPEEDLIMIT ALARM"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"Record command information"}},{"bool":{"must":[{"term":{"body":"cmdrecord"}},{"term":{"body":"level"}}]}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"arptrap"}},{"term":{"body":"iptrap"}},{"term":{"body":"reqmactrap"}}]}},{"term":{"logType":"安全日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"Failed to login"}},{"match_phrase":{"body":"Record command information"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"交换机"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"is pulled out abnormally"}},{"match_phrase":{"body":"changed to slave MPU"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"PS域数通"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"IP承载网"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"Command power off"}},{"match_phrase":{"body":"Command reset"}},{"match_phrase":{"body":"Command reboot"}},{"match_phrase":{"body":"Command level"}},{"match_phrase":{"body":"Failed to login"}}]}},{"term":{"logType":"操作日志"}},{"bool":{"should":[{"term":{"domain":"PS域数通"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"IP承载网"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"undergoing a cold start"}},{"match_phrase":{"body":"CPU load exceeds the lowest threshold NP(M) panel "}},{"match_phrase":{"body":"IGMP SNOOPING current host num is 32000 reaches the max host memory threshold 100"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"IP承载网"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"undergoing a cold start"}},{"match_phrase":{"body":"undergoing a warm start"}},{"term":{"body":"reload"}},{"match_phrase":{"body":"The Privileged mode password is changed"}},{"match_phrase":{"body":"NPC Start Working"}},{"match_phrase":{"body":"The line board is offline"}},{"match_phrase":{"body":"conflicts with our IP address"}},{"match_phrase":{"body":"ACL mp update session 100 but get buffer fail"}},{"match_phrase":{"body":"Port Down"}},{"match_phrase":{"body":"The enable password has been changed by oam shell"}},{"match_phrase":{"body":"arp packet conflicts with our MAC"}},{"match_phrase":{"body":"invalid source address"}},{"match_phrase":{"body":"invalid Dest address"}},{"match_phrase":{"body":"attacked by tcp syn flood"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"Too many password failures for"}},{"match_phrase":{"body":"request chassis"}},{"match_phrase":{"body":"UI CFG AUDIT OTHER"}},{"match_phrase":{"body":"Fru Offline"}},{"match_phrase":{"body":"FRU power off"}},{"match_phrase":{"body":"SNMP TRAP LINK DOWN"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"Juniper"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"term":{"body":"config"}},{"term":{"body":"port"}},{"term":{"body":"shut"}}]}},{"match_phrase":{"body":"crash detected"}},{"term":{"body":"removed"}},{"term":{"body":"inserted"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"CpuUsage has reached its threshold"}},{"match_phrase":{"body":"MemUsage has reached its threshold"}},{"term":{"body":"sctpippathfailure"}}]}},{"term":{"logType":"fm_alarm"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"small restart"}},{"match_phrase":{"body":"large restart"}},{"match_phrase":{"body":"node restart"}}]}},{"term":{"body":"manual"}},{"term":{"body":"utc"}}]}},{"match_phrase":{"body":"ncb failover"}}]}},{"term":{"logType":"isp.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Timeout when communicating with external node"}},{"term":{"logType":"mobility_event_log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"APN Resolving error"}},{"term":{"logType":"session_event_log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"term":{"body":"rhost"}},{"term":{"logType":"security log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"term":{"body":"utc"}},{"match_phrase":{"body":"Node down"}},{"term":{"body":"system"}},{"term":{"body":"manual"}}]}},{"term":{"body":"dying"}},{"term":{"body":"cpuusagethresholdreached"}},{"term":{"body":"memoryusagethresholdreached"}},{"term":{"body":"bearersthresholdreachedonapn"}},{"term":{"body":"bearersthresholdreachedonnode"}},{"term":{"body":"bearersthresholdreachedonnodeperrattype"}}]}},{"term":{"logType":"alarm-history"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"controller switch over"}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"irrecoverable SW fault"}},{"term":{"logType":"isp.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"loginterface cli"}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ARP SENDER IP INVALID"}},{"match_phrase":{"body":"ARP RATE EXCEEDED"}},{"match_phrase":{"body":"ETHOAM OAM LINK DOWN"}},{"match_phrase":{"body":"Reboot device by command"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ARP SENDER IP INVALID"}},{"match_phrase":{"body":"ARP RATE EXCEEDED"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ETHOAM OAM LINK DOWN"}},{"match_phrase":{"body":"Reboot device by command"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"WEBOPT_UPDATESW"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"LS USER ROLE CHANGE"}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"USER RESET"}},{"bool":{"must":[{"match_phrase":{"body":"MGBL config 6 DB COMMIT"}},{"match_phrase":{"body":"configuration committed by user"}}]}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"城域网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"思科"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"4418"}},{"match_phrase":{"body":"4419"}},{"match_phrase":{"body":"8007"}},{"match_phrase":{"body":"10048"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"110011"}},{"match_phrase":{"body":"400119"}},{"match_phrase":{"body":"105001"}},{"match_phrase":{"body":"110002"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"SET"}},{"match_phrase":{"body":"DEL"}},{"match_phrase":{"body":"ADD"}},{"match_phrase":{"body":"DEL IMS APN"}},{"match_phrase":{"body":"SET SOFTWARE PARAMETER"}},{"match_phrase":{"body":"SET OVERLOAD BASIC PARA"}},{"match_phrase":{"body":"SET MME SERVICE CONTROL"}},{"match_phrase":{"body":"SET MME OVERLOAD PARA"}},{"match_phrase":{"body":"SET MOBILE MANAGEMENT"}},{"match_phrase":{"body":"SET NAS INTEGCTRL"}},{"match_phrase":{"body":"SET INTEGCTRL"}},{"match_phrase":{"body":"SET GTP PARAMETER"}},{"match_phrase":{"body":"SET PACKET DOMAIN PARAMETER"}},{"match_phrase":{"body":"SET CAPACITY"}},{"match_phrase":{"body":"RESET FORCE"}},{"match_phrase":{"body":"RESET NORMAL"}},{"match_phrase":{"body":"SWP FORCE"}},{"match_phrase":{"body":"SWP NORMAL"}},{"match_phrase":{"body":"SET COMBOCFG"}},{"match_phrase":{"body":"SET OPC"}},{"match_phrase":{"body":"SYNA"}},{"match_phrase":{"body":"RESTORE DATA"}},{"match_phrase":{"body":"EXPORT USERINFO"}},{"match_phrase":{"body":"CLEAR DNSCACHE"}},{"match_phrase":{"body":"EXEC REBALANCE"}},{"match_phrase":{"body":"EXEC UNLOAD"}},{"match_phrase":{"body":"RESET BVC"}},{"match_phrase":{"body":"RESET ENODEB"}},{"match_phrase":{"body":"RESET RNC"}},{"match_phrase":{"body":"RESTART SCTP"}},{"match_phrase":{"body":"STOP SCTP"}},{"match_phrase":{"body":"STOP ALLLNK"}},{"match_phrase":{"body":"RESET ALLLNK"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"default dscp"}},{"match_phrase":{"body":"qci dscp map"}},{"match_phrase":{"body":"rewrite"}},{"match_phrase":{"body":"ip allocate mode"}},{"match_phrase":{"body":"pcscf address"}},{"match_phrase":{"body":"pcscf profile"}},{"match_phrase":{"body":"pcc pcrf"}},{"match_phrase":{"body":"pcc access"}},{"match_phrase":{"body":"charge online ocs server"}},{"match_phrase":{"body":"ippool"}},{"match_phrase":{"body":"idle time lte"}},{"match_phrase":{"body":"idle time"}},{"match_phrase":{"body":"tcp optimize control"}},{"match_phrase":{"body":"charge charging mode"}},{"match_phrase":{"body":"alias"}},{"match_phrase":{"body":"access"}},{"match_phrase":{"body":"charge control"}},{"match_phrase":{"body":"control rule"}},{"match_phrase":{"body":"charge rule"}},{"match_phrase":{"body":"vrf"}},{"match_phrase":{"body":"segment"}},{"match_phrase":{"body":"cg profile"}},{"match_phrase":{"body":"s5s8-gtpu-ip-address"}},{"match_phrase":{"body":"s5s8-gtpc-ip-address"}},{"match_phrase":{"body":"s11-gtp-ip-address"}},{"match_phrase":{"body":"deactive pdp"}},{"match_phrase":{"body":"flow hash"}},{"match_phrase":{"body":"network"}},{"match_phrase":{"body":"router ospf"}},{"match_phrase":{"body":"ip route"}},{"match_phrase":{"body":"ip address"}},{"match_phrase":{"body":"power"}},{"match_phrase":{"body":"reload"}},{"match_phrase":{"body":"rollback configuration"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"term":{"body":"command"}},{"term":{"logType":"操作日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}}],"must_not":{"terms":{"body":["show","display","ping","trace"],"minimum_match":1}}}}
+		]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size": 0,
+	"aggs": {
+		"recent_12h": {
+			"filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			}
+		}
+	}
+}
+
+	</queryItem>
+
+	<queryItem domain="漏斗图预警" name="预警" >
+{
+    "query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"is pulled out abnormally"}},{"match_phrase":{"body":"changed to slave MPU"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"PS域数通"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"IP承载网"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"Command power off"}},{"match_phrase":{"body":"Command reset"}},{"match_phrase":{"body":"Command reboot"}},{"match_phrase":{"body":"Command level"}},{"match_phrase":{"body":"Failed to login"}}]}},{"term":{"logType":"操作日志"}},{"bool":{"should":[{"term":{"domain":"PS域数通"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"IP承载网"}},{"term":{"domain":"城域网"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"undergoing a cold start"}},{"match_phrase":{"body":"CPU load exceeds the lowest threshold NP(M) panel "}},{"match_phrase":{"body":"IGMP SNOOPING current host num is 32000 reaches the max host memory threshold 100"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"IP承载网"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"match_phrase":{"body":"smchip isr base"}},{"match_phrase":{"body":"UnCorrectable ECC"}}]}},{"match_phrase":{"body":"request chassis"}},{"match_phrase":{"body":"power off"}},{"match_phrase":{"body":"power on"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"Juniper"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"term":{"body":"config"}},{"term":{"body":"port"}},{"term":{"body":"shut"}}]}},{"match_phrase":{"body":"crash detected"}},{"term":{"body":"removed"}},{"term":{"body":"inserted"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"CpuUsage has reached its threshold"}},{"match_phrase":{"body":"MemUsage has reached its threshold"}},{"term":{"body":"sctpippathfailure"}}]}},{"term":{"logType":"fm_alarm"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"small restart"}},{"match_phrase":{"body":"large restart"}},{"match_phrase":{"body":"node restart"}}]}},{"term":{"body":"manual"}},{"term":{"body":"utc"}}]}},{"match_phrase":{"body":"ncb failover"}}]}},{"term":{"logType":"isp.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Timeout when communicating with external node"}},{"term":{"logType":"mobility_event_log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"APN Resolving error"}},{"term":{"logType":"session_event_log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"term":{"body":"rhost"}},{"term":{"logType":"security log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"bool":{"must":[{"term":{"body":"utc"}},{"match_phrase":{"body":"Node down"}},{"term":{"body":"system"}},{"term":{"body":"manual"}}]}},{"term":{"body":"dying"}},{"term":{"body":"cpuusagethresholdreached"}},{"term":{"body":"memoryusagethresholdreached"}},{"term":{"body":"bearersthresholdreachedonapn"}},{"term":{"body":"bearersthresholdreachedonnode"}},{"term":{"body":"bearersthresholdreachedonnodeperrattype"}}]}},{"term":{"logType":"alarm-history"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"controller switch over"}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"irrecoverable SW fault"}},{"term":{"logType":"isp.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"loginterface cli"}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ARP SENDER IP INVALID"}},{"match_phrase":{"body":"ARP RATE EXCEEDED"}},{"match_phrase":{"body":"ETHOAM OAM LINK DOWN"}},{"match_phrase":{"body":"Reboot device by command"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ARP SENDER IP INVALID"}},{"match_phrase":{"body":"ARP RATE EXCEEDED"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ETHOAM OAM LINK DOWN"}},{"match_phrase":{"body":"Reboot device by command"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"WEBOPT_UPDATESW"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"LS USER ROLE CHANGE"}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"USER RESET"}},{"bool":{"must":[{"match_phrase":{"body":"MGBL config 6 DB COMMIT"}},{"match_phrase":{"body":"configuration committed by user"}}]}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"城域网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}},{"term":{"domain":"CMNET"}}]}},{"term":{"vendor":"思科"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"4418"}},{"match_phrase":{"body":"4419"}},{"match_phrase":{"body":"8007"}},{"match_phrase":{"body":"10048"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"110011"}},{"match_phrase":{"body":"400119"}},{"match_phrase":{"body":"105001"}},{"match_phrase":{"body":"110002"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"SET"}},{"match_phrase":{"body":"DEL"}},{"match_phrase":{"body":"ADD"}},{"match_phrase":{"body":"DEL IMS APN"}},{"match_phrase":{"body":"SET SOFTWARE PARAMETER"}},{"match_phrase":{"body":"SET OVERLOAD BASIC PARA"}},{"match_phrase":{"body":"SET MME SERVICE CONTROL"}},{"match_phrase":{"body":"SET MME OVERLOAD PARA"}},{"match_phrase":{"body":"SET MOBILE MANAGEMENT"}},{"match_phrase":{"body":"SET NAS INTEGCTRL"}},{"match_phrase":{"body":"SET INTEGCTRL"}},{"match_phrase":{"body":"SET GTP PARAMETER"}},{"match_phrase":{"body":"SET PACKET DOMAIN PARAMETER"}},{"match_phrase":{"body":"SET CAPACITY"}},{"match_phrase":{"body":"RESET FORCE"}},{"match_phrase":{"body":"RESET NORMAL"}},{"match_phrase":{"body":"SWP FORCE"}},{"match_phrase":{"body":"SWP NORMAL"}},{"match_phrase":{"body":"SET COMBOCFG"}},{"match_phrase":{"body":"SET OPC"}},{"match_phrase":{"body":"SYNA"}},{"match_phrase":{"body":"RESTORE DATA"}},{"match_phrase":{"body":"EXPORT USERINFO"}},{"match_phrase":{"body":"CLEAR DNSCACHE"}},{"match_phrase":{"body":"EXEC REBALANCE"}},{"match_phrase":{"body":"EXEC UNLOAD"}},{"match_phrase":{"body":"RESET BVC"}},{"match_phrase":{"body":"RESET ENODEB"}},{"match_phrase":{"body":"RESET RNC"}},{"match_phrase":{"body":"RESTART SCTP"}},{"match_phrase":{"body":"STOP SCTP"}},{"match_phrase":{"body":"STOP ALLLNK"}},{"match_phrase":{"body":"RESET ALLLNK"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"default dscp"}},{"match_phrase":{"body":"qci dscp map"}},{"match_phrase":{"body":"rewrite"}},{"match_phrase":{"body":"ip allocate mode"}},{"match_phrase":{"body":"pcscf address"}},{"match_phrase":{"body":"pcscf profile"}},{"match_phrase":{"body":"pcc pcrf"}},{"match_phrase":{"body":"pcc access"}},{"match_phrase":{"body":"charge online ocs server"}},{"match_phrase":{"body":"ippool"}},{"match_phrase":{"body":"idle time lte"}},{"match_phrase":{"body":"idle time"}},{"match_phrase":{"body":"tcp optimize control"}},{"match_phrase":{"body":"charge charging mode"}},{"match_phrase":{"body":"alias"}},{"match_phrase":{"body":"access"}},{"match_phrase":{"body":"charge control"}},{"match_phrase":{"body":"control rule"}},{"match_phrase":{"body":"charge rule"}},{"match_phrase":{"body":"vrf"}},{"match_phrase":{"body":"segment"}},{"match_phrase":{"body":"cg profile"}},{"match_phrase":{"body":"s5s8-gtpu-ip-address"}},{"match_phrase":{"body":"s5s8-gtpc-ip-address"}},{"match_phrase":{"body":"s11-gtp-ip-address"}},{"match_phrase":{"body":"deactive pdp"}},{"match_phrase":{"body":"flow hash"}},{"match_phrase":{"body":"network"}},{"match_phrase":{"body":"router ospf"}},{"match_phrase":{"body":"ip route"}},{"match_phrase":{"body":"ip address"}},{"match_phrase":{"body":"power"}},{"match_phrase":{"body":"reload"}},{"match_phrase":{"body":"rollback configuration"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}}
+	    ]  
+	 }
+	},	"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size": 0,
+	"aggs": {
+		"recent_12h": {
+			"filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			}
+		}
+	}
+}
+	</queryItem>			
+		
+	<!--  end 首页漏斗图  -->
+
+	<!-- start 首页右下数据量动态统计趋势图 -->
+	
+	<queryItem domain="数据量动态统计" name="重启闪断" >
+{"query": {
+    "filtered": {
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+	"size": 0,
+	
+			"aggs": {
+		    	"minute_count":{
+				    "date_histogram":{
+					     "field": "eventTime",
+						 "interval":"15m",
+						 "format":"MM/dd HH:mm"
+					}
+				}
+		  }
+}
+	</queryItem>
+	<!--  end 首页右下数据量动态统计趋势图  -->
+	
+	
+	<queryItem domain="PS域主设备重启闪断" name="重启闪断" >
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"large restart"}},{"match_phrase":{"body":"small restart"}},{"match_phrase":{"body":"node restart"}},{"match_phrase":{"body":"ncb failover"}},{"match_phrase":{"body":"capsule failure"}},{"match_phrase":{"body":"pm failure"}}]}},{"term":{"logType":"isp.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"偶联断链"}},{"match_phrase":{"body":"单板无法上电通知"}},{"match_phrase":{"body":"单板倒换通知"}},{"match_phrase":{"body":"逻辑CPU上电成功通知信息"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"GSU启动"}},{"match_phrase":{"body":"GSU宕机"}},{"match_phrase":{"body":"cpu上线"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"term":{"body":"sctpalarmstorm"}},{"term":{"logType":"fm_alarm"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Node down System"}},{"term":{"logType":"isp.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"ulEvent 0x1d0700"}},{"terms":{"logType":["系统日志","CGP DEBUG日志"]}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Failed to alloc ueS1ConnIndex "}},{"terms":{"logType":["系统日志","USN DEBUG日志"]}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":{"query":"MPU reset","slop":1}}},{"match_phrase":{"body":{"query":"SPU reset","slop":1}}},{"match_phrase":{"body":"物理实体复位"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"terms":{"neType":["SAEGW","MME"]}}]}}
+		]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size": 0,
+	"aggs":{
+	    "recent_12h": {
+			"filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			},
+			"aggs": {
+		    	"hour_neName":{
+				    "date_histogram":{
+					     "field": "eventTime",
+						 "interval":"hour",
+						 "format":"MM/dd HH"
+					},
+					"aggs": {
+		    	        "distinct_neName":{
+				            "cardinality":{
+					            "field":"neName"
+					        }
+				        }
+		            }
+				}
+		    }
+		}
+	}
+}
+	</queryItem>
+	
+<queryItem domain="PS域主设备端口down" name="重启闪断" >
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"term":{"body":"sctpippathfailure"}},{"term":{"logType":"fm_alarm"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"增加路由失败"}},{"match_phrase":{"body":"子网内MAC地址冲突"}},{"match_phrase":{"body":"DNS服务器不可用"}},{"match_phrase":{"body":"网络中存在系统ID冲突的路由器"}},{"match_phrase":{"body":"MME上报MSC Server不可达"}},{"match_phrase":{"body":"PGW的IP地址不可用"}},{"match_phrase":{"body":"移动性管理类节点不可达"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"某接口地址改变"}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}}
+		]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size": 0,
+	"aggs":{
+	    "recent_12h": {
+			"filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			},
+			"aggs": {
+		    	"hour_neName":{
+				    "date_histogram":{
+					     "field": "eventTime",
+						 "interval":"hour",
+						 "format":"MM/dd HH"
+					},
+					"aggs": {
+		    	        "distinct_neName":{
+				            "cardinality":{
+					            "field":"neName"
+					        }
+				        }
+		            }
+				}
+		    }
+		}
+	}
+}
+	</queryItem>
+	
+	<queryItem domain="数通设备重启闪断" name="重启闪断" >
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"bool":{"must":[{"match_phrase":{"body":"LINK UPDOWN"}},{"match_phrase":{"body":"link status is DOWN"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"防火墙"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"SYSTEM_REBOOT System is rebooting now"}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"Reboot device by command"}},{"match_phrase":{"body":"DLDP LINK UNIDIRECTIONAL"}}]}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}]}},
+         {"bool":{"must":[{"match_phrase":{"body":"BOARD REBOOT"}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"terms":{"body":["rstsla","smreset"]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"ABT CHK REBOOTFAIL"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"terms":{"body":["rstsla","smreset"]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"防火墙"}}]}}
+		]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size": 0,
+	"aggs":{
+	    "recent_12h": {
+			"filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			},
+			"aggs": {
+		    	"hour_neName":{
+				    "date_histogram":{
+					     "field": "eventTime",
+						 "interval":"hour",
+						 "format":"MM/dd HH"
+					},
+					"aggs": {
+		    	        "distinct_neName":{
+				            "cardinality":{
+					            "field":"neName"
+					        }
+				        }
+		            }
+				}
+		    }
+		}
+	}
+}
+	</queryItem>
+	<queryItem domain="承载网重启闪断" name="重启闪断" >
+{
+	"query": {
+	 "bool":{
+	   "should":[
+		 {"bool":{"must":[{"term":{"body":"reboot"}},{"term":{"logType":"操作日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"link state DOWN"}},{"match_phrase":{"body":"restarting csm now"}},{"match_phrase":{"body":"restarting ospf now"}},{"term":{"body":"removed"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"link state DOWN"}},{"term":{"body":"removed"}}]}},{"term":{"logType":"安全日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"term":{"body":"linkdown"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"IP承载网"}},{"term":{"vendor":"阿朗"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"USER RESET"}},{"match_phrase":{"body":"FSMTIMEOUT RESET"}},{"bool":{"must":[{"term":{"body":"updown"}},{"match_phrase":{"body":"changed state to down"}}]}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"思科"}},{"term":{"neType":"路由器"}}]}}
+        ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size": 0,
+	"aggs":{
+	    "recent_12h": {
+			"filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			},
+			"aggs": {
+		    	"hour_neName":{
+				    "date_histogram":{
+					     "field": "eventTime",
+						 "interval":"hour",
+						 "format":"MM/dd HH"
+					},
+					"aggs": {
+		    	        "distinct_neName":{
+				            "cardinality":{
+					            "field":"neName"
+					        }
+				        }
+		            }
+				}
+		    }
+		}
+	}
+}
+	
+	</queryItem>
+	<queryItem domain="承载网端口down" name="端口down">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+		 {"bool":{"must":[{"match_phrase":{"body":"PORTNOAVAILABLE"}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"must":[{"term":{"body":"config"}},{"term":{"body":"port"}},{"term":{"body":"shut"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"路由器"}}]}}
+        ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size": 0,
+	"aggs":{
+	    "recent_12h": {
+			"filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			},
+			"aggs": {
+		    	"hour_neName":{
+				    "date_histogram":{
+					     "field": "eventTime",
+						 "interval":"hour",
+						 "format":"MM/dd HH"
+					},
+					"aggs": {
+		    	        "distinct_neName":{
+				            "cardinality":{
+					            "field":"neName"
+					        }
+				        }
+		            }
+				}
+		    }
+		}
+	}
+}
+	</queryItem>
+	
+	<queryItem domain="城域网重启闪断" name="闪断重启" >
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"term":{"body":"linkdown"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"阿朗"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"term":{"body":"reboot"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"USER RESET"}},{"match_phrase":{"body":"FSMTIMEOUT RESET"}},{"bool":{"must":[{"term":{"body":"updown"}},{"match_phrase":{"body":"changed state to Down"}}]}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"思科"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"undergoing a cold start"}},{"match_phrase":{"body":"undergoing a warm start"}},{"term":{"body":"reload"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"交换机"}}]}}
+	 ]}
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size": 0,
+	"aggs":{
+	    "recent_12h": {
+			"filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			},
+			"aggs": {
+		    	"hour_neName":{
+				    "date_histogram":{
+					     "field": "eventTime",
+						 "interval":"hour",
+						 "format":"MM/dd HH"
+					},
+					"aggs": {
+		    	        "distinct_neName":{
+				            "cardinality":{
+					            "field":"neName"
+					        }
+				        }
+		            }
+				}
+		    }
+		}
+	}
+}
+	</queryItem>
+	<queryItem domain="城域网端口down" name="端口down">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"PORTNOAVAILABLE"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Port Down"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"交换机"}}]}}
+	 ]}
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size": 0,
+	"aggs":{
+	    "recent_12h": {
+			"filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			},
+			"aggs": {
+		    	"hour_neName":{
+				    "date_histogram":{
+					     "field": "eventTime",
+						 "interval":"hour",
+						 "format":"MM/dd HH"
+					},
+					"aggs": {
+		    	        "distinct_neName":{
+				            "cardinality":{
+					            "field":"neName"
+					        }
+				        }
+		            }
+				}
+		    }
+		}
+	}
+}
+	</queryItem>
+	<queryItem domain="CMNET重启闪断" name="闪断重启" >
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"FRU power off"}},{"match_phrase":{"body":"SNMP TRAP LINK DOWN"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"Juniper"}},{"term":{"neType":"路由器"}}]}},
+	     {"bool":{"must":[{"term":{"body":"reboot"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"USER RESET"}},{"match_phrase":{"body":"FSMTIMEOUT RESET"}},{"bool":{"must":[{"term":{"body":"updown"}},{"match_phrase":{"body":"changed state to Down"}}]}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"思科"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"Reboot device by command"}},{"match_phrase":{"body":"DLDP LINK UNIDIRECTIONAL"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}]}}
+	    ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size": 0,
+	"aggs":{
+	    "recent_12h": {
+			"filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			},
+			"aggs": {
+		    	"hour_neName":{
+				    "date_histogram":{
+					     "field": "eventTime",
+						 "interval":"hour",
+						 "format":"MM/dd HH"
+					},
+					"aggs": {
+		    	        "distinct_neName":{
+				            "cardinality":{
+					            "field":"neName"
+					        }
+				        }
+		            }
+				}
+		    }
+		}
+	}
+}
+	</queryItem>
+	<queryItem domain="CMNET端口down" name="端口down">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"Fru Offline"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"Juniper"}},{"term":{"neType":"路由器"}}]}},
+	     {"bool":{"must":[{"match_phrase":{"body":"PORTNOAVAILABLE"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"ETHOAM OAM LINK DOWN"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}]}}
+	    ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size": 0,
+	"aggs":{
+	    "recent_12h": {
+			"filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			},
+			"aggs": {
+		    	"hour_neName":{
+				    "date_histogram":{
+					     "field": "eventTime",
+						 "interval":"hour",
+						 "format":"MM/dd HH"
+					},
+					"aggs": {
+		    	        "distinct_neName":{
+				            "cardinality":{
+					            "field":"neName"
+					        }
+				        }
+		            }
+				}
+		    }
+		}
+	}
+}
+	</queryItem>
+	<queryItem domain="CMNET协议变更" name="协议变更">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+		 {"bool":{"must":[{"match_phrase":{"body":"LINK UPDOWN"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}]}}
+	    ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size": 0,
+	"aggs":{
+	    "recent_12h": {
+			"filter": {
+				"range": {
+					"eventTime": {
+						"from": "now-4h",
+						"to": "now+8h"
+					}
+				}
+			},
+			"aggs": {
+		    	"hour_neName":{
+				    "date_histogram":{
+					     "field": "eventTime",
+						 "interval":"hour",
+						 "format":"MM/dd HH"
+					},
+					"aggs": {
+		    	        "distinct_neName":{
+				            "cardinality":{
+					            "field":"neName"
+					        }
+				        }
+		            }
+				}
+		    }
+		}
+	}
+}
+	</queryItem>
+	
+	Top5_异常登录
+	<queryItem domain="PS域主设备异常登录" name="异常登录">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"登录成功"}},{"match_phrase":{"body":"登录失败"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"telnet user log in"}},{"match_phrase":{"body":"telnet information incomplete"}}]}},{"term":{"logType":"系统日志（通知）"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}},
+	     {"bool":{"must":[{"term":{"body":"rhost"}},{"term":{"logType":"security log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"must":[{"term":{"body":"notice"}},{"term":{"body":"host"}}]}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"登出"}},{"term":{"body":"登入"}}]}},{"term":{"logType":"安全日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"MME"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"match_phrase":{"body":{"query":"status fail","slop":1}}},{"term":{"logType":"安全日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"SAEGW"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}}
+	   ]  
+	 }
+	},	"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs":{
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+			"aggs":{
+	            "neName":{
+		            "terms":{
+			            "field":"neName",
+				        "size":5,
+				        "order":{
+				            "_count":"desc"
+				        }
+			        }
+		        }
+			}
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="数通设备异常登录" name="异常登录">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"term":{"body":"loginauthfail"}},{"match_phrase":{"body":"failed to login from"}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"SSHS AUTH EXCEED RETRY TIMES"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Failed to login"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"交换机"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"match_phrase":{"body":"ASTPKT GADD ERR1"}},{"term":{"logType":"协议日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs":{
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+			"aggs":{
+	            "neName":{
+		            "terms":{
+			            "field":"neName",
+				        "size":5,
+				        "order":{
+				            "_count":"desc"
+				        }
+			        }
+		        }
+			}
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="承载网异常登录" name="异常登录">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"ssh user login failed"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"IP承载网"}},{"term":{"vendor":"阿朗"}},{"term":{"neType":"路由器"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"bool":{"must":[{"match_phrase":{"body":"failed for all authentication methods"}},{"term":{"body":"error"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"bool":{"must":[{"match_phrase":{"body":"authentication failed using RADIUS records"}},{"term":{"body":"error"}}]}},{"term":{"logType":"安全日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"security login 4 AUTHEN_FAILED"}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"思科"}},{"term":{"neType":"路由器"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Failed to login"}},{"term":{"logType":"安全日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs":{
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+			"aggs":{
+	            "neName":{
+		            "terms":{
+			            "field":"neName",
+				        "size":5,
+				        "order":{
+				            "_count":"desc"
+				        }
+			        }
+		        }
+			}
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="城域网异常登录" name="异常登录">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"ssh user login failed"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"阿朗"}},{"term":{"neType":"路由器"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Failed to login"}},{"term":{"logType":"安全日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"match_phrase":{"body":"security login 4 AUTHEN FAILED"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"思科"}},{"term":{"neType":"路由器"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"match_phrase":{"body":"arp packet conflicts with our MAC"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"交换机"}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs":{
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+			"aggs":{
+	            "neName":{
+		            "terms":{
+			            "field":"neName",
+				        "size":5,
+				        "order":{
+				            "_count":"desc"
+				        }
+			        }
+		        }
+			}
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="CMNET异常登录" name="异常登录">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"SSHS AUTH EXCEED RETRY TIMES"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Too many password failures for"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"Juniper"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"security login 4 AUTHEN FAILED"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"思科"}},{"term":{"neType":"交换机"}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Failed to login"}},{"term":{"logType":"安全日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}],"must_not":{"terms":{"body":[],"minimum_match":1}}}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs":{
+	   "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+			"aggs":{
+	            "neName":{
+		            "terms":{
+			            "field":"neName",
+				        "size":5,
+				        "order":{
+				            "_count":"desc"
+				        }
+			        }
+		        }
+			}
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="PS域主设备网络入侵" name="网络入侵">
+	
+	</queryItem>
+	<queryItem domain="数通设备网络入侵" name="网络入侵">
+	{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"ARP SRC MAC FOUND ATTACK"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"authsequencenumwrap"}},{"term":{"body":"ifbadrx"}},{"term":{"body":"ifrxbadpkt"}}]}},{"term":{"logType":"协议日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"arptrap"}},{"term":{"body":"iptrap"}},{"term":{"body":"reqmactrap"}}]}},{"term":{"logType":"安全日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}},{"term":{"neType":"防火墙"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ATK_ATTACK_REPORT"}},{"match_phrase":{"body":"ATK_STREAM_ALARM"}}]}},{"term":{"logType":"安全日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ARP ENTRY CHECK"}},{"match_phrase":{"body":"ARP GLOBLE SPEEDLIMIT ALARM"}},{"match_phrase":{"body":"ARP IF SPEEDLIMIT ALARM"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"terms":{"neType":["路由器","交换机"]}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"ARP DUPLICATE IPADDR"}},{"match_phrase":{"body":"ARP ENTRY CHECK"}},{"match_phrase":{"body":"ARP GLOBLE SPEEDLIMIT ALARM"}},{"match_phrase":{"body":"ARP IF SPEEDLIMIT ALARM"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"防火墙"}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs":{
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+			"aggs":{
+	            "neName":{
+		            "terms":{
+			            "field":"neName",
+				        "size":5,
+				        "order":{
+				            "_count":"desc"
+				        }
+			        }
+		        }
+			}
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="承载网网络入侵" name="网络入侵">
+	{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"term":{"body":"dos"}},{"term":{"logType":"安全日志"}},{"term":{"domain":"IP承载网"}},{"term":{"vendor":"阿朗"}},{"term":{"neType":"路由器"}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs":{
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+			"aggs":{
+	            "neName":{
+		            "terms":{
+			            "field":"neName",
+				        "size":5,
+				        "order":{
+				            "_count":"desc"
+				        }
+			        }
+		        }
+			}
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="城域网网络入侵" name="网络入侵">
+	{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"invalid source address"}},{"match_phrase":{"body":"invalid Dest address"}},{"match_phrase":{"body":"attacked by tcp syn flood"}},{"match_phrase":{"body":"conflicts with our IP address"}}]}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"交换机"}}]}},
+	     {"bool":{"must":[{"term":{"body":"dos"}},{"term":{"logType":"安全日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"阿朗"}},{"term":{"neType":"路由器"}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs":{
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+			"aggs":{
+	            "neName":{
+		            "terms":{
+			            "field":"neName",
+				        "size":5,
+				        "order":{
+				            "_count":"desc"
+				        }
+			        }
+		        }
+			}
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="CMNET网络入侵" name="网络入侵">
+	
+	</queryItem>
+	<queryItem domain="PS域主设备高危操作" name="高危操作">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"RESTART SCTP"}},{"match_phrase":{"body":"STOP SCTP"}},{"match_phrase":{"body":"STOP ALLLNK"}},{"match_phrase":{"body":"RESET ALLLNK"}},{"match_phrase":{"body":"RESET RNC"}},{"match_phrase":{"body":"RESET ENODEB"}},{"match_phrase":{"body":"RESET BVC"}},{"match_phrase":{"body":"EXEC UNLOAD"}},{"match_phrase":{"body":"EXEC REBALANCE"}},{"match_phrase":{"body":"CLEAR DNSCACHE"}},{"match_phrase":{"body":"EXPORT USERINFO"}},{"match_phrase":{"body":"RESTORE DATA"}},{"match_phrase":{"body":"SYNASWP NORMAL"}},{"match_phrase":{"body":"SWP FORCE"}},{"match_phrase":{"body":"RESET NORMAL"}},{"match_phrase":{"body":"RESET FORCE"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"rollback configuration"}},{"term":{"body":"reload"}},{"term":{"body":"power"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}},
+	     {"bool":{"must":[{"bool":{"should":[{"terms":{"body":["create","restart","block","modify","active","manualsetsc","reboot","restore","rm","rmdir"]}},{"match_phrase":{"body":"set sm roleToUser"}},{"match_phrase":{"body":"set sm group"}},{"match_phrase":{"body":"get qos policymap g"}},{"match_phrase":{"body":"delete static route"}},{"match_phrase":{"body":"delete sm user"}},{"match_phrase":{"body":"delete sm role"}},{"match_phrase":{"body":"delete ospf"}},{"match_phrase":{"body":"delete ip service"}},{"match_phrase":{"body":"delete ip network subnet"}},{"match_phrase":{"body":"delete ip interface"}},{"match_phrase":{"body":"delete imsins"}},{"match_phrase":{"body":"delete eth vlan"}},{"match_phrase":{"body":"delete eth port"}},{"match_phrase":{"body":"delete dns"}},{"match_phrase":{"body":"delete diameter realm"}},{"match_phrase":{"body":"delete diameter peer"}},{"match_phrase":{"body":"delete diameter application"}},{"match_phrase":{"body":"add sm action"}},{"match_phrase":{"body":"add sm role"}},{"match_phrase":{"body":"add sm user"}}]}},{"term":{"logType":"cli_log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"shutdown"}},{"bool":{"must":[{"match_phrase":{"body":"set interfaces"}},{"term":{"body":"disable"}}]}},{"terms":{"body":["accesscontrolrule","accesstype","address","administrator","allowrulespace","alwaysallowedaccesscontrolrule","applicationid","bind","blocked","boardallocation","bufferlimit","ccvalues","cdrattribute","changelimit","chargingformat","context","controlcontext","cost","creation","creditcontrolroprofile","default","description","destinationrealm","diameterapplicationsystem","editcontent","enableaccesscontrolrules","enablededicatedbearer","encapsulation","encrypted","extendedheader","facility","failureaction","forceemptyfiles","ggsnaddress","ggsndeletespersecond","giaddressrange","gomaddressrange","gxprofile","headerrulesets","host","httpwspruleset","id","imeisv","imsbasedtelephonymmtel","imsi","ip","lacp","logicalinterface","lte","maximumage","maximumbitratedownlink","maximumbitrateuplink","maximumsize","messageforeverycontext","msisdn","name","netloc","networkaddress","networkport","networkprefix","noaccountingon","nodename","noreestablish","nosession","numberofcpb","numberofppb","parameter","payload","pdptype","peer","pgwenabled","plmnid","policy","policycontroldynamicgxprofile","port","priority","privilege","qoscontrolprofile","rattype","realm","redistribute","reload","rm","roamingclass","routinginstance","rulespace","secret","server ","service","sharedippool","shutdown","starts","stop","subscriptionid","terminate","timelimit","timeout","transfertype","traps ","useaccesscontrolrule","uservalue","versionlist","vipaddress","volume","wlan"]}},{"match_phrase":{"body":"TD SCDMA"}},{"match_phrase":{"body":"t3ResponseTime"}},{"match_phrase":{"body":"snmp target"}},{"match_phrase":{"body":"snmp  view"}},{"match_phrase":{"body":"snmp community"}},{"match_phrase":{"body":"sgi outgoing acl"}},{"match_phrase":{"body":"sgi incoming acl"}},{"match_phrase":{"body":"router dead interval"}},{"match_phrase":{"body":"retransmit interval"}},{"match_phrase":{"body":"PdpContext 1"}},{"match_phrase":{"body":"pcc release"}},{"match_phrase":{"body":"oam cli"}},{"match_phrase":{"body":"ntp mode"}},{"match_phrase":{"body":"network type"}},{"match_phrase":{"body":"n3Requests"}},{"match_phrase":{"body":"minimum links"}},{"match_phrase":{"body":"mgmt acl"}},{"match_phrase":{"body":"metric type"}},{"match_phrase":{"body":"md5"}},{"match_phrase":{"body":"maximum links"}},{"match_phrase":{"body":"load balance"}},{"match_phrase":{"body":"ipv6AddressAllocation"}},{"match_phrase":{"body":"inactivity timeout"}},{"match_phrase":{"body":"HSPA Evolution"}},{"match_phrase":{"body":"hello interval"}},{"match_phrase":{"body":"gre incoming acl"}},{"match_phrase":{"body":"GPRS/EDGE"}},{"match_phrase":{"body":"gnS5AddressRange"}},{"match_phrase":{"body":"gn incoming acl"}},{"match_phrase":{"body":"fast convergence"}},{"match_phrase":{"body":"dot1q pvc"}},{"match_phrase":{"body":"domain lookup"}},{"match_phrase":{"body":"Charging 1"}},{"match_phrase":{"body":"access group"}}]}},{"term":{"logType":"cli_commands"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"term":{"body":"登录"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"terms":{"body":["accesscontrolrule","accesstype","address","administrator","allowrulespace","alwaysallowedaccesscontrolrule","applicationid","bind","blocked","boardallocation","bufferlimit","ccvalues","cdrattribute","changelimit","chargingformat","context","controlcontext","cost","creation","creditcontrolroprofile","default","description","destinationrealm","diameterapplicationsystem","editcontent","enableaccesscontrolrules","enablededicatedbearer","encapsulation","encrypted","extendedheader","facility","failureaction","forceemptyfiles","ggsnaddress","ggsndeletespersecond","giaddressrange","gomaddressrange","gxprofile","headerrulesets","host","httpwspruleset","id","imeisv","imsbasedtelephonymmtel","imsi","ip","lacp","logicalinterface","lte","maximumage","maximumbitratedownlink","maximumbitrateuplink","maximumsize","messageforeverycontext","msisdn","name","netloc","networkaddress","networkport","networkprefix","noaccountingon","nodename","noreestablish","nosession","numberofcpb","numberofppb","parameter","payload","pdptype","peer","pgwenabled","plmnid","policy","policycontroldynamicgxprofile","port","priority","privilege","qoscontrolprofile","rattype","realm","redistribute","reload","rm","roamingclass","routinginstance","rulespace","secret","server ","service","sharedippool","shutdown","starts","stop","subscriptionid","terminate","timelimit","timeout","transfertype","traps ","useaccesscontrolrule","uservalue","versionlist","vipaddress","volume","wlan"]}},{"match_phrase":{"body":"TD SCDMA"}},{"match_phrase":{"body":"t3ResponseTime"}},{"match_phrase":{"body":"snmp target"}},{"match_phrase":{"body":"snmp  view"}},{"match_phrase":{"body":"snmp community"}},{"match_phrase":{"body":"sgi outgoing acl"}},{"match_phrase":{"body":"sgi incoming acl"}},{"match_phrase":{"body":"router dead interval"}},{"match_phrase":{"body":"retransmit interval"}},{"match_phrase":{"body":"PdpContext 1"}},{"match_phrase":{"body":"pcc release"}},{"match_phrase":{"body":"oam cli"}},{"match_phrase":{"body":"ntp mode"}},{"match_phrase":{"body":"network type"}},{"match_phrase":{"body":"n3Requests"}},{"match_phrase":{"body":"minimum links"}},{"match_phrase":{"body":"mgmt acl"}},{"match_phrase":{"body":"metric type"}},{"match_phrase":{"body":"md5"}},{"match_phrase":{"body":"maximum links"}},{"match_phrase":{"body":"load balance"}},{"match_phrase":{"body":"ipv6AddressAllocation"}},{"match_phrase":{"body":"inactivity timeout"}},{"match_phrase":{"body":"HSPA Evolution"}},{"match_phrase":{"body":"hello interval"}},{"match_phrase":{"body":"gre incoming acl"}},{"match_phrase":{"body":"GPRS/EDGE"}},{"match_phrase":{"body":"gnS5AddressRange"}},{"match_phrase":{"body":"gn incoming acl"}},{"match_phrase":{"body":"fast convergence"}},{"match_phrase":{"body":"dot1q pvc"}},{"match_phrase":{"body":"domain lookup"}},{"match_phrase":{"body":"Charging 1"}},{"match_phrase":{"body":"access group"}}]}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"undo"}},{"term":{"body":"reboot"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"SAEGW"}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "city"
+				    },
+				    "aggs":{
+				        "distinct_neName":{
+					        "cardinality":{
+						        "field":"neName"
+						    }
+					    }
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="数通设备高危操作" name="高危操作">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"SYSTEM REBOOT System is rebooting now"}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"DRV DEV BRD ON OFF"}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"BRD ON OFF"}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Record command information"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"防火墙"}},{"term":{"neType":"交换机"}}]}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "city"
+				    },
+				    "aggs":{
+				        "distinct_neName":{
+					        "cardinality":{
+						        "field":"neName"
+						    }
+					    }
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="承载网高危操作" name="高危操作">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"Record command information"}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"bool":{"must":[{"term":{"body":"config"}},{"match_phrase":{"body":"save config"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"路由器"}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "city"
+				    },
+				    "aggs":{
+				        "distinct_neName":{
+					        "cardinality":{
+						        "field":"neName"
+						    }
+					    }
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="城域网高危操作" name="高危操作">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"Record command information"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"The enable password has been changed by oam shell"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"交换机"}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "city"
+				    },
+				    "aggs":{
+				        "distinct_neName":{
+					        "cardinality":{
+						        "field":"neName"
+						    }
+					    }
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="CMNET高危操作" name="高危操作">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"request chassis"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"Juniper"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"DRV DEV BRD ON OFF"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Record command information"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "city"
+				    },
+				    "aggs":{
+				        "distinct_neName":{
+					        "cardinality":{
+						        "field":"neName"
+						    }
+					    }
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	
+	<queryItem domain="PS域主设备设备升级数量" name="设备升级数量">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"installation done"}},{"term":{"logType":"swm log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"ENABLE PKG"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "city"
+				    },
+				    "aggs":{
+				        "distinct_neName":{
+					        "cardinality":{
+						        "field":"neName"
+						    }
+					    }
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="数通设备设备升级数量" name="设备升级数量">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"WEBOPT UPDATESW"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"term":{"body":"lpurupgrade"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"terms":{"neType":["路由器","防火墙"]}}]}},
+		 {"bool":{"must":[{"term":{"body":"fastupgradefail"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"PAF TYPE LOSS ISSU"}},{"term":{"logType":"协议日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"防火墙"}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "city"
+				    },
+				    "aggs":{
+				        "distinct_neName":{
+					        "cardinality":{
+						        "field":"neName"
+						    }
+					    }
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="承载网设备升级数量" name="设备升级数量">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+		 {"bool":{"must":[{"term":{"body":"lpurupgrade"}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "city"
+				    },
+				    "aggs":{
+				        "distinct_neName":{
+					        "cardinality":{
+						        "field":"neName"
+						    }
+					    }
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="城域网设备升级数量" name="设备升级数量">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"term":{"body":"lpurupgrade"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "city"
+				    },
+				    "aggs":{
+				        "distinct_neName":{
+					        "cardinality":{
+						        "field":"neName"
+						    }
+					    }
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="CMNET设备升级数量" name="设备升级数量">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+		 {"bool":{"must":[{"term":{"body":"lpurupgrade"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+			    "range": {
+				    "eventTime": {
+					    "from": "now-4h",
+					    "to": "now+8h"
+				    }
+			    }
+		    },
+		    "aggs": {
+			    "cities": {
+				    "terms": {
+				        "field": "city"
+				    },
+				    "aggs":{
+				        "distinct_neName":{
+					        "cardinality":{
+						        "field":"neName"
+						    }
+					    }
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	
+	</queryItem>
+	
+	
+	
+	<queryItem domain="PS域主设备高危操作设备清单" name="高危操作设备清单">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"RESTART SCTP"}},{"match_phrase":{"body":"STOP SCTP"}},{"match_phrase":{"body":"STOP ALLLNK"}},{"match_phrase":{"body":"RESET ALLLNK"}},{"match_phrase":{"body":"RESET RNC"}},{"match_phrase":{"body":"RESET ENODEB"}},{"match_phrase":{"body":"RESET BVC"}},{"match_phrase":{"body":"EXEC UNLOAD"}},{"match_phrase":{"body":"EXEC REBALANCE"}},{"match_phrase":{"body":"CLEAR DNSCACHE"}},{"match_phrase":{"body":"EXPORT USERINFO"}},{"match_phrase":{"body":"RESTORE DATA"}},{"match_phrase":{"body":"SYNASWP NORMAL"}},{"match_phrase":{"body":"SWP FORCE"}},{"match_phrase":{"body":"RESET NORMAL"}},{"match_phrase":{"body":"RESET FORCE"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"match_phrase":{"body":"rollback configuration"}},{"term":{"body":"reload"}},{"term":{"body":"power"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"SAEGW"}}]}},
+	     {"bool":{"must":[{"bool":{"should":[{"terms":{"body":["create","restart","block","modify","active","manualsetsc","reboot","restore","rm","rmdir"]}},{"match_phrase":{"body":"set sm roleToUser"}},{"match_phrase":{"body":"set sm group"}},{"match_phrase":{"body":"get qos policymap g"}},{"match_phrase":{"body":"delete static route"}},{"match_phrase":{"body":"delete sm user"}},{"match_phrase":{"body":"delete sm role"}},{"match_phrase":{"body":"delete ospf"}},{"match_phrase":{"body":"delete ip service"}},{"match_phrase":{"body":"delete ip network subnet"}},{"match_phrase":{"body":"delete ip interface"}},{"match_phrase":{"body":"delete imsins"}},{"match_phrase":{"body":"delete eth vlan"}},{"match_phrase":{"body":"delete eth port"}},{"match_phrase":{"body":"delete dns"}},{"match_phrase":{"body":"delete diameter realm"}},{"match_phrase":{"body":"delete diameter peer"}},{"match_phrase":{"body":"delete diameter application"}},{"match_phrase":{"body":"add sm action"}},{"match_phrase":{"body":"add sm role"}},{"match_phrase":{"body":"add sm user"}}]}},{"term":{"logType":"cli_log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"shutdown"}},{"bool":{"must":[{"match_phrase":{"body":"set interfaces"}},{"term":{"body":"disable"}}]}},{"terms":{"body":["accesscontrolrule","accesstype","address","administrator","allowrulespace","alwaysallowedaccesscontrolrule","applicationid","bind","blocked","boardallocation","bufferlimit","ccvalues","cdrattribute","changelimit","chargingformat","context","controlcontext","cost","creation","creditcontrolroprofile","default","description","destinationrealm","diameterapplicationsystem","editcontent","enableaccesscontrolrules","enablededicatedbearer","encapsulation","encrypted","extendedheader","facility","failureaction","forceemptyfiles","ggsnaddress","ggsndeletespersecond","giaddressrange","gomaddressrange","gxprofile","headerrulesets","host","httpwspruleset","id","imeisv","imsbasedtelephonymmtel","imsi","ip","lacp","logicalinterface","lte","maximumage","maximumbitratedownlink","maximumbitrateuplink","maximumsize","messageforeverycontext","msisdn","name","netloc","networkaddress","networkport","networkprefix","noaccountingon","nodename","noreestablish","nosession","numberofcpb","numberofppb","parameter","payload","pdptype","peer","pgwenabled","plmnid","policy","policycontroldynamicgxprofile","port","priority","privilege","qoscontrolprofile","rattype","realm","redistribute","reload","rm","roamingclass","routinginstance","rulespace","secret","server ","service","sharedippool","shutdown","starts","stop","subscriptionid","terminate","timelimit","timeout","transfertype","traps ","useaccesscontrolrule","uservalue","versionlist","vipaddress","volume","wlan"]}},{"match_phrase":{"body":"TD SCDMA"}},{"match_phrase":{"body":"t3ResponseTime"}},{"match_phrase":{"body":"snmp target"}},{"match_phrase":{"body":"snmp  view"}},{"match_phrase":{"body":"snmp community"}},{"match_phrase":{"body":"sgi outgoing acl"}},{"match_phrase":{"body":"sgi incoming acl"}},{"match_phrase":{"body":"router dead interval"}},{"match_phrase":{"body":"retransmit interval"}},{"match_phrase":{"body":"PdpContext 1"}},{"match_phrase":{"body":"pcc release"}},{"match_phrase":{"body":"oam cli"}},{"match_phrase":{"body":"ntp mode"}},{"match_phrase":{"body":"network type"}},{"match_phrase":{"body":"n3Requests"}},{"match_phrase":{"body":"minimum links"}},{"match_phrase":{"body":"mgmt acl"}},{"match_phrase":{"body":"metric type"}},{"match_phrase":{"body":"md5"}},{"match_phrase":{"body":"maximum links"}},{"match_phrase":{"body":"load balance"}},{"match_phrase":{"body":"ipv6AddressAllocation"}},{"match_phrase":{"body":"inactivity timeout"}},{"match_phrase":{"body":"HSPA Evolution"}},{"match_phrase":{"body":"hello interval"}},{"match_phrase":{"body":"gre incoming acl"}},{"match_phrase":{"body":"GPRS/EDGE"}},{"match_phrase":{"body":"gnS5AddressRange"}},{"match_phrase":{"body":"gn incoming acl"}},{"match_phrase":{"body":"fast convergence"}},{"match_phrase":{"body":"dot1q pvc"}},{"match_phrase":{"body":"domain lookup"}},{"match_phrase":{"body":"Charging 1"}},{"match_phrase":{"body":"access group"}}]}},{"term":{"logType":"cli_commands"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"term":{"body":"登录"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"terms":{"body":["accesscontrolrule","accesstype","address","administrator","allowrulespace","alwaysallowedaccesscontrolrule","applicationid","bind","blocked","boardallocation","bufferlimit","ccvalues","cdrattribute","changelimit","chargingformat","context","controlcontext","cost","creation","creditcontrolroprofile","default","description","destinationrealm","diameterapplicationsystem","editcontent","enableaccesscontrolrules","enablededicatedbearer","encapsulation","encrypted","extendedheader","facility","failureaction","forceemptyfiles","ggsnaddress","ggsndeletespersecond","giaddressrange","gomaddressrange","gxprofile","headerrulesets","host","httpwspruleset","id","imeisv","imsbasedtelephonymmtel","imsi","ip","lacp","logicalinterface","lte","maximumage","maximumbitratedownlink","maximumbitrateuplink","maximumsize","messageforeverycontext","msisdn","name","netloc","networkaddress","networkport","networkprefix","noaccountingon","nodename","noreestablish","nosession","numberofcpb","numberofppb","parameter","payload","pdptype","peer","pgwenabled","plmnid","policy","policycontroldynamicgxprofile","port","priority","privilege","qoscontrolprofile","rattype","realm","redistribute","reload","rm","roamingclass","routinginstance","rulespace","secret","server ","service","sharedippool","shutdown","starts","stop","subscriptionid","terminate","timelimit","timeout","transfertype","traps ","useaccesscontrolrule","uservalue","versionlist","vipaddress","volume","wlan"]}},{"match_phrase":{"body":"TD SCDMA"}},{"match_phrase":{"body":"t3ResponseTime"}},{"match_phrase":{"body":"snmp target"}},{"match_phrase":{"body":"snmp  view"}},{"match_phrase":{"body":"snmp community"}},{"match_phrase":{"body":"sgi outgoing acl"}},{"match_phrase":{"body":"sgi incoming acl"}},{"match_phrase":{"body":"router dead interval"}},{"match_phrase":{"body":"retransmit interval"}},{"match_phrase":{"body":"PdpContext 1"}},{"match_phrase":{"body":"pcc release"}},{"match_phrase":{"body":"oam cli"}},{"match_phrase":{"body":"ntp mode"}},{"match_phrase":{"body":"network type"}},{"match_phrase":{"body":"n3Requests"}},{"match_phrase":{"body":"minimum links"}},{"match_phrase":{"body":"mgmt acl"}},{"match_phrase":{"body":"metric type"}},{"match_phrase":{"body":"md5"}},{"match_phrase":{"body":"maximum links"}},{"match_phrase":{"body":"load balance"}},{"match_phrase":{"body":"ipv6AddressAllocation"}},{"match_phrase":{"body":"inactivity timeout"}},{"match_phrase":{"body":"HSPA Evolution"}},{"match_phrase":{"body":"hello interval"}},{"match_phrase":{"body":"gre incoming acl"}},{"match_phrase":{"body":"GPRS/EDGE"}},{"match_phrase":{"body":"gnS5AddressRange"}},{"match_phrase":{"body":"gn incoming acl"}},{"match_phrase":{"body":"fast convergence"}},{"match_phrase":{"body":"dot1q pvc"}},{"match_phrase":{"body":"domain lookup"}},{"match_phrase":{"body":"Charging 1"}},{"match_phrase":{"body":"access group"}}]}},{"term":{"logType":"loggd_persistent.log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"SAEGW"}}]}},
+		 {"bool":{"must":[{"bool":{"should":[{"term":{"body":"undo"}},{"term":{"body":"reboot"}}]}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"华为"}},{"term":{"neType":"SAEGW"}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+	            "and": [{
+		            "term": {
+			            "city": "根据当前柱状图的变量"
+		            }
+	            },
+	            {
+		            "range": {
+			            "eventTime": {
+				            "from": "now-4h",
+				            "to": "now+8h"
+			            }
+		            }
+	            }]
+            },
+		    "aggs": {
+			    "neName": {
+				    "terms": {
+				        "field": "neName",
+						"order": {
+							"_count": "desc"
+						}
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="数通设备高危操作设备清单" name="高危操作设备清单">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"SYSTEM REBOOT System is rebooting now"}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"DRV DEV BRD ON OFF"}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"BRD ON OFF"}},{"term":{"logType":"系统日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Record command information"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"防火墙"}},{"term":{"neType":"交换机"}}]}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+	            "and": [{
+		            "term": {
+			            "city": "根据当前柱状图的变量"
+		            }
+	            },
+	            {
+		            "range": {
+			            "eventTime": {
+				            "from": "now-4h",
+				            "to": "now+8h"
+			            }
+		            }
+	            }]
+            },
+		    "aggs": {
+			    "neName": {
+				    "terms": {
+				        "field": "neName",
+						"order": {
+							"_count": "desc"
+						}
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="承载网设备高危操作设备清单" name="高危操作设备清单">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	    {"bool":{"must":[{"match_phrase":{"body":"Record command information"}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		{"bool":{"must":[{"bool":{"must":[{"term":{"body":"config"}},{"match_phrase":{"body":"save config"}}]}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"CS_CE"}},{"term":{"domain":"PS_CE"}}]}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"路由器"}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+	            "and": [{
+		            "term": {
+			            "city": "根据当前柱状图的变量"
+		            }
+	            },
+	            {
+		            "range": {
+			            "eventTime": {
+				            "from": "now-4h",
+				            "to": "now+8h"
+			            }
+		            }
+	            }]
+            },
+		    "aggs": {
+			    "neName": {
+				    "terms": {
+				        "field": "neName",
+						"order": {
+							"_count": "desc"
+						}
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	
+	</queryItem>
+	<queryItem domain="城域网高危操作设备清单" name="高危操作设备清单">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	    {"bool":{"must":[{"match_phrase":{"body":"Record command information"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}},
+		{"bool":{"must":[{"match_phrase":{"body":"The enable password has been changed by oam shell"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"交换机"}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+	            "and": [{
+		            "term": {
+			            "city": "根据当前柱状图的变量"
+		            }
+	            },
+	            {
+		            "range": {
+			            "eventTime": {
+				            "from": "now-4h",
+				            "to": "now+8h"
+			            }
+		            }
+	            }]
+            },
+		    "aggs": {
+			    "neName": {
+				    "terms": {
+				        "field": "neName",
+						"order": {
+							"_count": "desc"
+						}
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="CMNET高危操作设备清单" name="高危操作设备清单">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"request chassis"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"Juniper"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"DRV DEV BRD ON OFF"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"路由器"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"Record command information"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+	            "and": [{
+		            "term": {
+			            "city": "根据当前柱状图的变量"
+		            }
+	            },
+	            {
+		            "range": {
+			            "eventTime": {
+				            "from": "now-4h",
+				            "to": "now+8h"
+			            }
+		            }
+	            }]
+            },
+		    "aggs": {
+			    "neName": {
+				    "terms": {
+				        "field": "neName",
+						"order": {
+							"_count": "desc"
+						}
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="PS域主设备设备升级设备清单" name="设备升级设备清单">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"installation done"}},{"term":{"logType":"swm log"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"爱立信"}},{"term":{"neType":"MME"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"ENABLE PKG"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域"}},{"term":{"vendor":"中兴"}},{"term":{"neType":"MME"}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+	            "and": [{
+		            "term": {
+			            "city": "根据当前柱状图的变量"
+		            }
+	            },
+	            {
+		            "range": {
+			            "eventTime": {
+				            "from": "now-4h",
+				            "to": "now+8h"
+			            }
+		            }
+	            }]
+            },
+		    "aggs": {
+			    "neName": {
+				    "terms": {
+				        "field": "neName",
+						"order": {
+							"_count": "desc"
+						}
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="数通设备设备升级设备清单" name="设备升级设备清单">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"match_phrase":{"body":"WEBOPT UPDATESW"}},{"term":{"logType":"操作日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"H3C"}},{"term":{"neType":"防火墙"}}]}},
+		 {"bool":{"must":[{"term":{"body":"lpurupgrade"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"terms":{"neType":["路由器","防火墙"]}}]}},
+		 {"bool":{"must":[{"term":{"body":"fastupgradefail"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"交换机"}}]}},
+		 {"bool":{"must":[{"match_phrase":{"body":"PAF TYPE LOSS ISSU"}},{"term":{"logType":"协议日志"}},{"term":{"domain":"PS域数通"}},{"term":{"vendor":"华为"}},{"term":{"neType":"防火墙"}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+	            "and": [{
+		            "term": {
+			            "city": "根据当前柱状图的变量"
+		            }
+	            },
+	            {
+		            "range": {
+			            "eventTime": {
+				            "from": "now-4h",
+				            "to": "now+8h"
+			            }
+		            }
+	            }]
+            },
+		    "aggs": {
+			    "neName": {
+				    "terms": {
+				        "field": "neName",
+						"order": {
+							"_count": "desc"
+						}
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="承载网设备升级设备清单" name="设备升级设备清单">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"term":{"body":"lpurupgrade"}},{"term":{"logType":"其它日志"}},{"bool":{"should":[{"term":{"domain":"IP承载网"}},{"term":{"domain":"PS_CE"}},{"term":{"domain":"CS_CE"}}]}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+	            "and": [{
+		            "term": {
+			            "city": "根据当前柱状图的变量"
+		            }
+	            },
+	            {
+		            "range": {
+			            "eventTime": {
+				            "from": "now-4h",
+				            "to": "now+8h"
+			            }
+		            }
+	            }]
+            },
+		    "aggs": {
+			    "neName": {
+				    "terms": {
+				        "field": "neName",
+						"order": {
+							"_count": "desc"
+						}
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="城域网设备升级设备清单" name="设备升级设备清单">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"term":{"body":"lpurupgrade"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"城域网"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+	            "and": [{
+		            "term": {
+			            "city": "根据当前柱状图的变量"
+		            }
+	            },
+	            {
+		            "range": {
+			            "eventTime": {
+				            "from": "now-4h",
+				            "to": "now+8h"
+			            }
+		            }
+	            }]
+            },
+		    "aggs": {
+			    "neName": {
+				    "terms": {
+				        "field": "neName",
+						"order": {
+							"_count": "desc"
+						}
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+	<queryItem domain="CMNET设备升级设备清单" name="设备升级设备清单">
+{
+	"query": {
+	 "bool":{
+	   "should":[
+	     {"bool":{"must":[{"term":{"body":"lpurupgrade"}},{"term":{"logType":"其它日志"}},{"term":{"domain":"CMNET"}},{"term":{"vendor":"华为"}},{"bool":{"should":[{"term":{"neType":"路由器"}},{"term":{"neType":"交换机"}}]}}]}}
+	   ]  
+	 }
+	},"filter": {
+              "range": {
+                "eventTime": {
+                  "from": "now-4h",
+                  "to": "now+8h"
+                }
+              }
+  },
+	"size":0,
+	"aggs": {
+	    "recent_12h": {
+		    "filter": {
+	            "and": [{
+		            "term": {
+			            "city": "根据当前柱状图的变量"
+		            }
+	            },
+	            {
+		            "range": {
+			            "eventTime": {
+				            "from": "now-4h",
+				            "to": "now+8h"
+			            }
+		            }
+	            }]
+            },
+		    "aggs": {
+			    "neName": {
+				    "terms": {
+				        "field": "neName",
+						"order": {
+							"_count": "desc"
+						}
+				    }
+			    }
+		    }
+	    }
+    }
+}
+	</queryItem>
+
+	
+</queryItems>
